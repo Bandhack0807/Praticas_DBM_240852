@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `db_test_victor_7b` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `db_test_victor_7b`;
+CREATE DATABASE  IF NOT EXISTS `db_test_7b` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `db_test_7b`;
 -- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_test_victor_7b
+-- Host: localhost    Database: db_test_7b
 -- ------------------------------------------------------
 -- Server version	8.4.9
 
@@ -70,11 +70,11 @@ DELIMITER ;;
         'Create',
         USER(),
         CONCAT(
-            'Categor¡a creada: "',
+            'Categorï¿½a creada: "',
             NEW.name,
-            '". Descripci¢n: ',
+            '". Descripciï¿½n: ',
             COALESCE(NEW.description, 'NULL'),
-            ', Categor¡a superior: ',
+            ', Categorï¿½a superior: ',
             COALESCE(CAST(NEW.sup_id_category AS CHAR), 'NULL'),
             ', Status: ',
             CAST(NEW.status AS UNSIGNED)
@@ -112,7 +112,7 @@ DELIMITER ;;
     IF NOT (OLD.description <=> NEW.description) THEN
         SET changes_detail = CONCAT(
             changes_detail,
-            'Descripci¢n: "',
+            'Descripciï¿½n: "',
             COALESCE(OLD.description, 'NULL'),
             '" -> "',
             COALESCE(NEW.description, 'NULL'),
@@ -123,7 +123,7 @@ DELIMITER ;;
     IF NOT (OLD.sup_id_category <=> NEW.sup_id_category) THEN
         SET changes_detail = CONCAT(
             changes_detail,
-            'Categor¡a superior: ',
+            'Categorï¿½a superior: ',
             COALESCE(CAST(OLD.sup_id_category AS CHAR), 'NULL'),
             ' -> ',
             COALESCE(CAST(NEW.sup_id_category AS CHAR), 'NULL'),
@@ -189,7 +189,7 @@ DELIMITER ;;
         'Delete',
         USER(),
         CONCAT(
-            'Categor¡a eliminada. ID=',
+            'Categorï¿½a eliminada. ID=',
             OLD.ID,
             ', nombre=',
             OLD.name,
