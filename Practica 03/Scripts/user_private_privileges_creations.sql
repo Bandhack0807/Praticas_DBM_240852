@@ -1,9 +1,9 @@
 /* ============================================================
    CONFIGURACIÓN DE USUARIOS, ROLES Y PRIVILEGIOS
-   BASE DE DATOS: db_test_7b
+   BASE DE DATOS: db_test_victor_7b
    ============================================================ */
 
-USE db_test_7b;
+USE db_test_victor_7b;
 
 
 /* ============================================================
@@ -17,51 +17,40 @@ SHOW TABLES;
    2. CREACIÓN DE USUARIOS
    ============================================================ */
 
-CREATE USER IF NOT EXISTS 'Victor.Manuel'@'%'
-IDENTIFIED BY '240852';
+CREATE USER IF NOT EXISTS 'Victor.Manuel'@'%' IDENTIFIED BY '240852';
+CREATE USER IF NOT EXISTS 'marco.ramirez'@'%' IDENTIFIED BY 'qwerty123';
+CREATE USER IF NOT EXISTS 'Rodolfo.cs'@'%' IDENTIFIED BY '240836';
+CREATE USER IF NOT EXISTS 'angel'@'%' IDENTIFIED BY '240046';
+CREATE USER IF NOT EXISTS 'diego'@'%' IDENTIFIED BY '240709';
+CREATE USER IF NOT EXISTS 'osmar'@'%' IDENTIFIED BY '240036';
+CREATE USER IF NOT EXISTS 'samuel'@'%' IDENTIFIED BY '240023';
+CREATE USER IF NOT EXISTS 'jorge'@'%' IDENTIFIED BY '240456';
 
-CREATE USER IF NOT EXISTS 'marco.ramirez'@'%'
-IDENTIFIED BY 'qwerty123';
+/* Usuarios de middleware */
 
-CREATE USER IF NOT EXISTS 'Rodolfo.cs'@'%'
-IDENTIFIED BY '240836';
-
-CREATE USER IF NOT EXISTS 'angel'@'%'
-IDENTIFIED BY '240046';
-
-CREATE USER IF NOT EXISTS 'diego'@'%'
-IDENTIFIED BY '240709';
-
-CREATE USER IF NOT EXISTS 'osmar'@'%'
-IDENTIFIED BY '240036';
-
-CREATE USER IF NOT EXISTS 'samuel'@'%'
-IDENTIFIED BY '240023';
-
-CREATE USER IF NOT EXISTS 'jorge'@'%'
-IDENTIFIED BY '240456';
+CREATE USER IF NOT EXISTS 'app_web'@'%' IDENTIFIED BY 'web123';
+CREATE USER IF NOT EXISTS 'app_mobile'@'%' IDENTIFIED BY 'mobile890';
 
 
 /* ============================================================
    3. CREACIÓN DE ROLES
    ============================================================ */
 
-CREATE ROLE IF NOT EXISTS 'super_admin';
-CREATE ROLE IF NOT EXISTS 'admin';
-CREATE ROLE IF NOT EXISTS 'seller';
-CREATE ROLE IF NOT EXISTS 'buyer';
-CREATE ROLE IF NOT EXISTS 'support';
-CREATE ROLE IF NOT EXISTS 'common_user';
-CREATE ROLE IF NOT EXISTS 'user_not_registered';
+CREATE ROLE IF NOT EXISTS 'super_admin'@'%';
+CREATE ROLE IF NOT EXISTS 'admin'@'%';
+CREATE ROLE IF NOT EXISTS 'seller'@'%';
+CREATE ROLE IF NOT EXISTS 'buyer'@'%';
+CREATE ROLE IF NOT EXISTS 'support'@'%';
+CREATE ROLE IF NOT EXISTS 'common_user'@'%';
+CREATE ROLE IF NOT EXISTS 'user_not_registered'@'%';
 
 
 /* ============================================================
    4. PRIVILEGIOS DE SUPER ADMIN
    ============================================================ */
 
-GRANT ALL PRIVILEGES
-ON *.*
-TO 'super_admin'
+GRANT ALL PRIVILEGES ON *.*
+TO 'super_admin'@'%'
 WITH GRANT OPTION;
 
 
@@ -69,9 +58,8 @@ WITH GRANT OPTION;
    5. PRIVILEGIOS DE ADMIN
    ============================================================ */
 
-GRANT ALL PRIVILEGES
-ON db_test_7b.*
-TO 'admin';
+GRANT ALL PRIVILEGES ON db_test_victor_7b.*
+TO 'admin'@'%';
 
 
 /* ============================================================
@@ -79,8 +67,8 @@ TO 'admin';
    ============================================================ */
 
 GRANT SELECT, INSERT, UPDATE, DELETE
-ON db_test_7b.tb_products
-TO 'seller';
+ON db_test_victor_7b.tb_products
+TO 'seller'@'%';
 
 
 /* ============================================================
@@ -88,8 +76,8 @@ TO 'seller';
    ============================================================ */
 
 GRANT SELECT
-ON db_test_7b.tb_products
-TO 'buyer';
+ON db_test_victor_7b.tb_products
+TO 'buyer'@'%';
 
 
 /* ============================================================
@@ -97,119 +85,134 @@ TO 'buyer';
    ============================================================ */
 
 GRANT SELECT, INSERT, UPDATE
-ON db_test_7b.tb_users
-TO 'support';
+ON db_test_victor_7b.tb_users
+TO 'support'@'%';
 
 GRANT SELECT, INSERT, UPDATE
-ON db_test_7b.tb_categories
-TO 'support';
+ON db_test_victor_7b.tb_people
+TO 'support'@'%';
 
 GRANT SELECT, INSERT, UPDATE
-ON db_test_7b.tb_product_categories
-TO 'support';
+ON db_test_victor_7b.tb_user_addresses
+TO 'support'@'%';
+
+GRANT SELECT, INSERT, UPDATE
+ON db_test_victor_7b.tbc_categories
+TO 'support'@'%';
+
+GRANT SELECT, INSERT, UPDATE
+ON db_test_victor_7b.tbd_products_categories
+TO 'support'@'%';
 
 
 /* ============================================================
-   9. PRIVILEGIOS DE COMMON USER
+   9. PRIVILEGIOS DE COMMON_USER
    ============================================================ */
 
 GRANT SELECT
-ON db_test_7b.*
-TO 'common_user';
+ON db_test_victor_7b.*
+TO 'common_user'@'%';
 
 
 /* ============================================================
-   10. PRIVILEGIOS DE USER NOT REGISTERED
+   10. PRIVILEGIOS DE USER_NOT_REGISTERED
    ============================================================ */
 
 GRANT SELECT
-ON db_test_7b.tb_products
-TO 'user_not_registered';
+ON db_test_victor_7b.tb_products
+TO 'user_not_registered'@'%';
+
+/* Permisos para ejecutar los tres Stored Procedures */
+
+GRANT EXECUTE
+ON PROCEDURE db_test_victor_7b.sp_register_new_user
+TO 'user_not_registered'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE db_test_victor_7b.sp_restore_product
+TO 'user_not_registered'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE db_test_victor_7b.sp_soft_delete_product
+TO 'user_not_registered'@'%';
 
 
 /* ============================================================
-   11. ASIGNACIÓN DE ROLES
+   11. ASIGNACIÓN DE ROLES A LOS USUARIOS
    ============================================================ */
 
-GRANT 'super_admin'
+GRANT 'super_admin'@'%'
 TO 'Victor.Manuel'@'%';
 
-GRANT 'admin'
+GRANT 'admin'@'%'
 TO 'marco.ramirez'@'%';
 
-GRANT 'support'
+GRANT 'support'@'%'
 TO 'Rodolfo.cs'@'%';
 
-GRANT 'seller'
+GRANT 'seller'@'%'
 TO 'angel'@'%';
 
-GRANT 'seller'
+GRANT 'seller'@'%'
 TO 'diego'@'%';
 
-GRANT 'buyer'
+GRANT 'buyer'@'%'
 TO 'osmar'@'%';
 
-GRANT 'common_user'
+GRANT 'common_user'@'%'
 TO 'samuel'@'%';
 
-GRANT 'user_not_registered'
+GRANT 'user_not_registered'@'%'
 TO 'jorge'@'%';
+
+/* Asignación de roles al middleware */
+
+GRANT 'user_not_registered'@'%'
+TO 'app_web'@'%';
+
+GRANT 'user_not_registered'@'%'
+TO 'app_mobile'@'%';
 
 
 /* ============================================================
-   12. ROLES PREDETERMINADOS
+   12. ESTABLECER ROLES PREDETERMINADOS
    ============================================================ */
 
-SET DEFAULT ROLE 'super_admin'
+SET DEFAULT ROLE 'super_admin'@'%'
 TO 'Victor.Manuel'@'%';
 
-SET DEFAULT ROLE 'admin'
+SET DEFAULT ROLE 'admin'@'%'
 TO 'marco.ramirez'@'%';
 
-SET DEFAULT ROLE 'support'
+SET DEFAULT ROLE 'support'@'%'
 TO 'Rodolfo.cs'@'%';
 
-SET DEFAULT ROLE 'seller'
+SET DEFAULT ROLE 'seller'@'%'
 TO 'angel'@'%';
 
-SET DEFAULT ROLE 'seller'
+SET DEFAULT ROLE 'seller'@'%'
 TO 'diego'@'%';
 
-SET DEFAULT ROLE 'buyer'
+SET DEFAULT ROLE 'buyer'@'%'
 TO 'osmar'@'%';
 
-SET DEFAULT ROLE 'common_user'
+SET DEFAULT ROLE 'common_user'@'%'
 TO 'samuel'@'%';
 
-SET DEFAULT ROLE 'user_not_registered'
+SET DEFAULT ROLE 'user_not_registered'@'%'
 TO 'jorge'@'%';
 
+/* Roles predeterminados del middleware */
 
-/* ============================================================
-   13. VERIFICAR USUARIOS
-   ============================================================ */
+SET DEFAULT ROLE 'user_not_registered'@'%'
+TO 'app_web'@'%';
 
-SELECT
-    User,
-    Host,
-    account_locked,
-    password_expired
-FROM mysql.user
-WHERE User IN (
-    'Victor.Manuel',
-    'marco.ramirez',
-    'Rodolfo.cs',
-    'angel',
-    'diego',
-    'osmar',
-    'samuel',
-    'jorge'
-)
-ORDER BY User;
+SET DEFAULT ROLE 'user_not_registered'@'%'
+TO 'app_mobile'@'%';
 
 
 /* ============================================================
-   14. VERIFICAR PRIVILEGIOS DE LOS USUARIOS
+   13. VERIFICACIÓN DE PRIVILEGIOS DE LOS USUARIOS
    ============================================================ */
 
 SHOW GRANTS FOR 'Victor.Manuel'@'%';
@@ -220,23 +223,25 @@ SHOW GRANTS FOR 'diego'@'%';
 SHOW GRANTS FOR 'osmar'@'%';
 SHOW GRANTS FOR 'samuel'@'%';
 SHOW GRANTS FOR 'jorge'@'%';
+SHOW GRANTS FOR 'app_web'@'%';
+SHOW GRANTS FOR 'app_mobile'@'%';
 
 
 /* ============================================================
-   15. VERIFICAR PRIVILEGIOS DE LOS ROLES
+   14. VERIFICACIÓN DE PRIVILEGIOS DE LOS ROLES
    ============================================================ */
 
-SHOW GRANTS FOR 'super_admin';
-SHOW GRANTS FOR 'admin';
-SHOW GRANTS FOR 'seller';
-SHOW GRANTS FOR 'buyer';
-SHOW GRANTS FOR 'support';
-SHOW GRANTS FOR 'common_user';
-SHOW GRANTS FOR 'user_not_registered';
+SHOW GRANTS FOR 'super_admin'@'%';
+SHOW GRANTS FOR 'admin'@'%';
+SHOW GRANTS FOR 'seller'@'%';
+SHOW GRANTS FOR 'buyer'@'%';
+SHOW GRANTS FOR 'support'@'%';
+SHOW GRANTS FOR 'common_user'@'%';
+SHOW GRANTS FOR 'user_not_registered'@'%';
 
 
 /* ============================================================
-   16. VERIFICAR ASIGNACIONES DE ROLES
+   15. VERIFICACIÓN DE ROLES ASIGNADOS
    ============================================================ */
 
 SELECT
@@ -244,23 +249,13 @@ SELECT
     FROM_HOST AS host_rol,
     TO_USER AS usuario,
     TO_HOST AS host_usuario,
-    WITH_ADMIN_OPTION
+    WITH_ADMIN_OPTION AS permite_administrar
 FROM mysql.role_edges
-WHERE TO_USER IN (
-    'Victor.Manuel',
-    'marco.ramirez',
-    'Rodolfo.cs',
-    'angel',
-    'diego',
-    'osmar',
-    'samuel',
-    'jorge'
-)
 ORDER BY TO_USER, FROM_USER;
 
 
 /* ============================================================
-   17. VERIFICAR ROLES PREDETERMINADOS
+   16. VERIFICACIÓN DE ROLES PREDETERMINADOS
    ============================================================ */
 
 SELECT
@@ -269,23 +264,13 @@ SELECT
     DEFAULT_ROLE_USER AS rol_predeterminado,
     DEFAULT_ROLE_HOST AS host_rol
 FROM mysql.default_roles
-WHERE USER IN (
-    'Victor.Manuel',
-    'marco.ramirez',
-    'Rodolfo.cs',
-    'angel',
-    'diego',
-    'osmar',
-    'samuel',
-    'jorge'
-)
-ORDER BY USER, HOST;
+ORDER BY USER;
 
 
 /* ============================================================
-   18. MENSAJE FINAL
+   17. MENSAJE DE CONFIRMACIÓN
    ============================================================ */
 
 SELECT
-    'Configuración verificada'
+    'Configuración de usuarios, roles y privilegios finalizada'
     AS mensaje;
