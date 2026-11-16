@@ -365,7 +365,7 @@
       "checks": [],
       "engine": "InnoDB AUTO_INCREMENT=66438 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
       "description": "Bitácora de operaciones registradas sobre entidades.",
-      "rowCount": 8444
+      "rowCount": 66435
     },
     {
       "name": "tb_order_cancellations",
@@ -1796,7 +1796,7 @@
       "checks": [],
       "engine": "InnoDB AUTO_INCREMENT=8192 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
       "description": "Catálogo de productos.",
-      "rowCount": 4119
+      "rowCount": 7273
     },
     {
       "name": "tb_refunds",
@@ -4330,7 +4330,7 @@
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
       "description": "Asociación entre productos y categorías.",
-      "rowCount": 20914
+      "rowCount": 22029
     },
     {
       "name": "tbd_products_users_providers",
