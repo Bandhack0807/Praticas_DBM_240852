@@ -1,0 +1,5792 @@
+{
+  "source": "respaldo_10_11_26.sql",
+  "database": "db_test_victor_7b",
+  "server": "MySQL 8.4.9",
+  "tables": [
+    {
+      "name": "tb_carts",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tb_carts_ibfk_1"
+          ],
+          "indexes": [
+            "uk_cart_user"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "uk_cart_user",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "user_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "tb_carts_ibfk_1",
+          "columns": [
+            "user_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Carritos asociados a una cuenta de usuario."
+    },
+    {
+      "name": "tb_logs",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "table_name",
+          "type": "varchar(80)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "idx_logs_table_record_operation",
+            "idx_logs_table_operation_date"
+          ]
+        },
+        {
+          "name": "record_id",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "idx_logs_table_record_operation"
+          ]
+        },
+        {
+          "name": "table_operation",
+          "type": "enum('Create','Read','Update','Delete')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "idx_logs_table_record_operation",
+            "idx_logs_table_operation_date"
+          ]
+        },
+        {
+          "name": "db_user",
+          "type": "varchar(80)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "idx_logs_db_user_date"
+          ]
+        },
+        {
+          "name": "table_description",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "operation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "idx_logs_table_operation_date",
+            "idx_logs_db_user_date"
+          ]
+        },
+        {
+          "name": "operation_status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "idx_logs_table_record_operation",
+          "kind": "KEY",
+          "columns": [
+            "table_name",
+            "record_id",
+            "table_operation"
+          ],
+          "details": null
+        },
+        {
+          "name": "idx_logs_table_operation_date",
+          "kind": "KEY",
+          "columns": [
+            "table_name",
+            "table_operation",
+            "operation_date"
+          ],
+          "details": null
+        },
+        {
+          "name": "idx_logs_db_user_date",
+          "kind": "KEY",
+          "columns": [
+            "db_user",
+            "operation_date"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "engine": "InnoDB AUTO_INCREMENT=66438 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Bitácora de operaciones registradas sobre entidades."
+    },
+    {
+      "name": "tb_order_cancellations",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_order_cancellations_order"
+          ],
+          "indexes": [
+            "fk_order_cancellations_order"
+          ]
+        },
+        {
+          "name": "requested_by",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_order_cancellations_user"
+          ],
+          "indexes": [
+            "fk_order_cancellations_user"
+          ]
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "enum('Requested','Approved','Rejected','Completed')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Requested'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_order_cancellations_order",
+          "kind": "KEY",
+          "columns": [
+            "order_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_order_cancellations_user",
+          "kind": "KEY",
+          "columns": [
+            "requested_by"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_order_cancellations_order",
+          "columns": [
+            "order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_order_cancellations_user",
+          "columns": [
+            "requested_by"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Encabezados de solicitudes de cancelación de pedidos."
+    },
+    {
+      "name": "tb_orders",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "seller_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tb_orders_ibfk_1"
+          ],
+          "indexes": [
+            "seller_ID"
+          ]
+        },
+        {
+          "name": "subtotal",
+          "type": "decimal(12,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'0.00'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "shipping_cost",
+          "type": "decimal(12,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'0.00'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "fulfillment_status",
+          "type": "enum('Pending','Accepted','Preparing','Sent','Delivered','Canceled','Returned')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Pending'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "seller_ID",
+          "kind": "KEY",
+          "columns": [
+            "seller_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "tb_orders_ibfk_1",
+          "columns": [
+            "seller_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "tb_orders_chk_1",
+          "expression": "(`subtotal` >= 0)"
+        },
+        {
+          "name": "tb_orders_chk_2",
+          "expression": "(`shipping_cost` >= 0)"
+        }
+      ],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Encabezados de pedidos y sus importes."
+    },
+    {
+      "name": "tb_payment_methods",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Catálogo heredado de métodos de pago; confirmar uso mediante vistas/procedimientos."
+    },
+    {
+      "name": "tb_payment_transaction",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "payment_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_trans_payment"
+          ],
+          "indexes": [
+            "fk_trans_payment"
+          ]
+        },
+        {
+          "name": "transaction_reference",
+          "type": "varchar(255)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "gateway_response",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_trans_payment",
+          "kind": "KEY",
+          "columns": [
+            "payment_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_trans_payment",
+          "columns": [
+            "payment_ID"
+          ],
+          "targetTable": "tb_payments",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Transacciones de pago."
+    },
+    {
+      "name": "tb_payments",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_payments_order"
+          ],
+          "indexes": [
+            "fk_payments_order"
+          ]
+        },
+        {
+          "name": "user_payment_method_ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_payments_user_method"
+          ],
+          "indexes": [
+            "fk_payments_user_method"
+          ]
+        },
+        {
+          "name": "amount",
+          "type": "decimal(12,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "payment_status",
+          "type": "enum('Pending','Approved','Rejected','Refunded')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Pending'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_payments_order",
+          "kind": "KEY",
+          "columns": [
+            "order_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_payments_user_method",
+          "kind": "KEY",
+          "columns": [
+            "user_payment_method_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_payments_order",
+          "columns": [
+            "order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_payments_user_method",
+          "columns": [
+            "user_payment_method_ID"
+          ],
+          "targetTable": "tbd_user_payment_methods",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Pagos vinculados a pedidos y métodos de pago del usuario."
+    },
+    {
+      "name": "tb_people",
+      "columns": [
+        {
+          "name": "person_ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_people_users"
+          ],
+          "indexes": [
+            "user_ID"
+          ]
+        },
+        {
+          "name": "courtesy_title",
+          "type": "varchar(20)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "given_names",
+          "type": "varchar(150)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "family_names",
+          "type": "varchar(150)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "birth_date",
+          "type": "date",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "gender",
+          "type": "enum('Hombre','Mujer','Prefiero",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Prefiero no decirlo'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "country_code",
+          "type": "char(2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "phone",
+          "type": "varchar(25)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "person_ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "person_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "user_ID",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "user_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_people_users",
+          "columns": [
+            "user_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB AUTO_INCREMENT=7504 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Información de persona y datos asociados a una cuenta."
+    },
+    {
+      "name": "tb_products",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "SKU",
+          "type": "varchar(50)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "SKU"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "varchar(250)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "current_price",
+          "type": "decimal(10,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'0.00'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "current_stock",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'0'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "SKU",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "SKU"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "engine": "InnoDB AUTO_INCREMENT=8192 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Catálogo de productos.",
+      "rowCount": 4119
+    },
+    {
+      "name": "tb_refunds",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "payment_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_refunds_payment"
+          ],
+          "indexes": [
+            "fk_refunds_payment"
+          ]
+        },
+        {
+          "name": "amount",
+          "type": "decimal(12,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_refunds_payment",
+          "kind": "KEY",
+          "columns": [
+            "payment_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_refunds_payment",
+          "columns": [
+            "payment_ID"
+          ],
+          "targetTable": "tb_payments",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Reembolsos asociados a pagos."
+    },
+    {
+      "name": "tb_returns",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_returns_order_hdr"
+          ],
+          "indexes": [
+            "fk_returns_order_hdr"
+          ]
+        },
+        {
+          "name": "requested_by",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_returns_user"
+          ],
+          "indexes": [
+            "fk_returns_user"
+          ]
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "enum('Requested','Approved','Rejected','Completed')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Requested'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_returns_order_hdr",
+          "kind": "KEY",
+          "columns": [
+            "order_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_returns_user",
+          "kind": "KEY",
+          "columns": [
+            "requested_by"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_returns_order_hdr",
+          "columns": [
+            "order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_returns_user",
+          "columns": [
+            "requested_by"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Encabezados de solicitudes de devolución."
+    },
+    {
+      "name": "tb_shipments",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_shipments_order"
+          ],
+          "indexes": [
+            "fk_shipments_order"
+          ]
+        },
+        {
+          "name": "tracking_number",
+          "type": "varchar(100)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "carrier",
+          "type": "varchar(100)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "shipping_status",
+          "type": "enum('Preparing','In_Transit','Delivered','Failed')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Preparing'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "shipped_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "delivered_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_shipments_order",
+          "kind": "KEY",
+          "columns": [
+            "order_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_shipments_order",
+          "columns": [
+            "order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Envíos vinculados a pedidos."
+    },
+    {
+      "name": "tb_user_addresses",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_addresses_users"
+          ],
+          "indexes": [
+            "idx_user_addresses"
+          ]
+        },
+        {
+          "name": "address_label",
+          "type": "varchar(100)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "recipient_name",
+          "type": "varchar(150)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "recipient_phone",
+          "type": "varchar(25)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "delivery_instructions",
+          "type": "varchar(500)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "latitude",
+          "type": "decimal(10,7)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "longitude",
+          "type": "decimal(10,7)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "is_default",
+          "type": "tinyint(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'0'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "default_user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": true,
+          "generatedStorage": "STORED",
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "uq_tb_user_addresses_default_user"
+          ]
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "uq_tb_user_addresses_default_user",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "default_user_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "idx_user_addresses",
+          "kind": "KEY",
+          "columns": [
+            "user_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_addresses_users",
+          "columns": [
+            "user_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_coordinates",
+          "expression": "(((`latitude` is null) and (`longitude` is null)) or ((`latitude` is not null) and (`longitude` is not null)))"
+        },
+        {
+          "name": "chk_latitude",
+          "expression": "(`latitude` between -(90) and 90)"
+        },
+        {
+          "name": "chk_longitude",
+          "expression": "(`longitude` between -(180) and 180)"
+        }
+      ],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Direcciones asociadas a usuarios."
+    },
+    {
+      "name": "tb_users",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "email",
+          "type": "varchar(100)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "email"
+          ]
+        },
+        {
+          "name": "nick",
+          "type": "varchar(50)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "nick"
+          ]
+        },
+        {
+          "name": "password",
+          "type": "varchar(255)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_login",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "email",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "email"
+          ],
+          "details": null
+        },
+        {
+          "name": "nick",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "nick"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "engine": "InnoDB AUTO_INCREMENT=7503 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Cuentas de usuario."
+    },
+    {
+      "name": "tbc_categories",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "varchar(120)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "name"
+          ]
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "sup_id_category",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_superior_category"
+          ],
+          "indexes": [
+            "fk_superior_category"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "name",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "name"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_superior_category",
+          "kind": "KEY",
+          "columns": [
+            "sup_id_category"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_superior_category",
+          "columns": [
+            "sup_id_category"
+          ],
+          "targetTable": "tbc_categories",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Catálogo jerárquico de categorías.",
+      "rowCount": 100
+    },
+    {
+      "name": "tbc_payment_methods_types",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "code",
+          "type": "varchar(30)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "code_UNIQUE"
+          ]
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "code_UNIQUE",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "code"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Catálogo de tipos de método de pago."
+    },
+    {
+      "name": "tbd_address_components",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY",
+            "uk_address_component"
+          ]
+        },
+        {
+          "name": "address_ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_component_address",
+            "fk_component_parent"
+          ],
+          "indexes": [
+            "uk_address_component",
+            "idx_address_parent"
+          ]
+        },
+        {
+          "name": "value",
+          "type": "varchar(255)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "component_type",
+          "type": "varchar(50)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "address_sup_ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_component_parent"
+          ],
+          "indexes": [
+            "idx_address_parent"
+          ]
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "uk_address_component",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "address_ID",
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "idx_address_parent",
+          "kind": "KEY",
+          "columns": [
+            "address_ID",
+            "address_sup_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_component_address",
+          "columns": [
+            "address_ID"
+          ],
+          "targetTable": "tb_user_addresses",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": "RESTRICT",
+          "onUpdate": null
+        },
+        {
+          "name": "fk_component_parent",
+          "columns": [
+            "address_ID",
+            "address_sup_ID"
+          ],
+          "targetTable": "tbd_address_components",
+          "targetColumns": [
+            "address_ID",
+            "ID"
+          ],
+          "onDelete": "RESTRICT",
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Componentes jerárquicos de una dirección."
+    },
+    {
+      "name": "tbd_cancellation_items",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "cancellation_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_cancellation_items_header"
+          ],
+          "indexes": [
+            "fk_cancellation_items_header"
+          ]
+        },
+        {
+          "name": "order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_cancellations_order"
+          ],
+          "indexes": [
+            "fk_cancellations_order"
+          ]
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "requested_by",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_cancellations_user"
+          ],
+          "indexes": [
+            "fk_cancellations_user"
+          ]
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_cancellations_order",
+          "kind": "KEY",
+          "columns": [
+            "order_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_cancellations_user",
+          "kind": "KEY",
+          "columns": [
+            "requested_by"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_cancellation_items_header",
+          "kind": "KEY",
+          "columns": [
+            "cancellation_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_cancellation_items_header",
+          "columns": [
+            "cancellation_ID"
+          ],
+          "targetTable": "tb_order_cancellations",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_cancellations_order",
+          "columns": [
+            "order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_cancellations_user",
+          "columns": [
+            "requested_by"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Detalle de artículos en una cancelación."
+    },
+    {
+      "name": "tbd_cart_items",
+      "columns": [
+        {
+          "name": "cart_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_cart_items_cart"
+          ],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "provider_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_cart_items_provider_product"
+          ],
+          "indexes": [
+            "PRIMARY KEY",
+            "idx_cart_items_provider_product"
+          ]
+        },
+        {
+          "name": "product_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_cart_items_provider_product"
+          ],
+          "indexes": [
+            "PRIMARY KEY",
+            "idx_cart_items_provider_product"
+          ]
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "cart_ID",
+        "provider_ID",
+        "product_ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "cart_ID",
+            "provider_ID",
+            "product_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "idx_cart_items_provider_product",
+          "kind": "KEY",
+          "columns": [
+            "provider_ID",
+            "product_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_cart_items_cart",
+          "columns": [
+            "cart_ID"
+          ],
+          "targetTable": "tb_carts",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_cart_items_provider_product",
+          "columns": [
+            "provider_ID",
+            "product_ID"
+          ],
+          "targetTable": "tbd_products_users_providers",
+          "targetColumns": [
+            "user_ID",
+            "product_ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "chk_cart_quantity",
+          "expression": "(`quantity` > 0)"
+        }
+      ],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Productos y cantidades incluidos en carritos."
+    },
+    {
+      "name": "tbd_order_items",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "seller_order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tbd_order_items_ibfk_1"
+          ],
+          "indexes": [
+            "seller_order_ID"
+          ]
+        },
+        {
+          "name": "product_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tbd_order_items_ibfk_2"
+          ],
+          "indexes": [
+            "product_ID_provider_ID"
+          ]
+        },
+        {
+          "name": "provider_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tbd_order_items_ibfk_2"
+          ],
+          "indexes": [
+            "product_ID_provider_ID"
+          ]
+        },
+        {
+          "name": "product_name",
+          "type": "varchar(255)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "unit_price",
+          "type": "decimal(12,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "subtotal",
+          "type": "decimal(12,2)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": null,
+          "autoIncrement": false,
+          "generated": true,
+          "generatedStorage": "STORED",
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "seller_order_ID",
+          "kind": "KEY",
+          "columns": [
+            "seller_order_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "product_ID_provider_ID",
+          "kind": "KEY",
+          "columns": [
+            "product_ID",
+            "provider_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "tbd_order_items_ibfk_1",
+          "columns": [
+            "seller_order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "tbd_order_items_ibfk_2",
+          "columns": [
+            "product_ID",
+            "provider_ID"
+          ],
+          "targetTable": "tbd_products_users_providers",
+          "targetColumns": [
+            "product_ID",
+            "user_ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [
+        {
+          "name": "tbd_order_items_chk_1",
+          "expression": "(`quantity` > 0)"
+        },
+        {
+          "name": "tbd_order_items_chk_2",
+          "expression": "(`unit_price` >= 0)"
+        }
+      ],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Detalle de productos incluidos en pedidos."
+    },
+    {
+      "name": "tbd_products_categories",
+      "columns": [
+        {
+          "name": "product_Id",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_pc_product"
+          ],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "category_Id",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_pc_category"
+          ],
+          "indexes": [
+            "PRIMARY KEY",
+            "fk_pc_category"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "product_Id",
+        "category_Id"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "product_Id",
+            "category_Id"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_pc_category",
+          "kind": "KEY",
+          "columns": [
+            "category_Id"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_pc_category",
+          "columns": [
+            "category_Id"
+          ],
+          "targetTable": "tbc_categories",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_pc_product",
+          "columns": [
+            "product_Id"
+          ],
+          "targetTable": "tb_products",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Asociación entre productos y categorías.",
+      "rowCount": 20914
+    },
+    {
+      "name": "tbd_products_users_providers",
+      "columns": [
+        {
+          "name": "user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_user1"
+          ],
+          "indexes": [
+            "PRIMARY KEY",
+            "uidx_product_user"
+          ]
+        },
+        {
+          "name": "product_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_products2"
+          ],
+          "indexes": [
+            "PRIMARY KEY",
+            "uidx_product_user"
+          ]
+        },
+        {
+          "name": "type_ownership",
+          "type": "enum('Owner','Reseller','Distributor')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "avalaible_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "user_ID",
+        "product_ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "user_ID",
+            "product_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "uidx_product_user",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "product_ID",
+            "user_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_products2",
+          "columns": [
+            "product_ID"
+          ],
+          "targetTable": "tb_products",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_user1",
+          "columns": [
+            "user_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Asociación entre productos y usuarios proveedores."
+    },
+    {
+      "name": "tbd_return_items",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "return_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_return_items_header"
+          ],
+          "indexes": [
+            "fk_return_items_header"
+          ]
+        },
+        {
+          "name": "order_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "fk_returns_order"
+          ],
+          "indexes": [
+            "fk_returns_order"
+          ]
+        },
+        {
+          "name": "reason",
+          "type": "text",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "enum('Requested','Approved','Rejected','Completed')",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'Requested'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_returns_order",
+          "kind": "KEY",
+          "columns": [
+            "order_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_return_items_header",
+          "kind": "KEY",
+          "columns": [
+            "return_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_return_items_header",
+          "columns": [
+            "return_ID"
+          ],
+          "targetTable": "tb_returns",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_returns_order",
+          "columns": [
+            "order_ID"
+          ],
+          "targetTable": "tb_orders",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Detalle de artículos incluidos en devoluciones."
+    },
+    {
+      "name": "tbd_user_payment_methods",
+      "columns": [
+        {
+          "name": "ID",
+          "type": "bigint",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": true,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tbd_user_payment_methods_ibfk_1"
+          ],
+          "indexes": [
+            "user_ID"
+          ]
+        },
+        {
+          "name": "payment_method_type_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [
+            "tbd_user_payment_methods_ibfk_2"
+          ],
+          "indexes": [
+            "payment_method_type_ID"
+          ]
+        },
+        {
+          "name": "provider",
+          "type": "varchar(60)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "uk_provider_method"
+          ]
+        },
+        {
+          "name": "provider_method_ref",
+          "type": "varchar(255)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": [
+            "uk_provider_method"
+          ]
+        },
+        {
+          "name": "label",
+          "type": "varchar(100)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_four",
+          "type": "char(4)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "is_default",
+          "type": "tinyint(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "'0'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "uk_provider_method",
+          "kind": "UNIQUE KEY",
+          "columns": [
+            "provider",
+            "provider_method_ref"
+          ],
+          "details": null
+        },
+        {
+          "name": "user_ID",
+          "kind": "KEY",
+          "columns": [
+            "user_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "payment_method_type_ID",
+          "kind": "KEY",
+          "columns": [
+            "payment_method_type_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "tbd_user_payment_methods_ibfk_1",
+          "columns": [
+            "user_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "tbd_user_payment_methods_ibfk_2",
+          "columns": [
+            "payment_method_type_ID"
+          ],
+          "targetTable": "tbc_payment_methods_types",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Métodos de pago pertenecientes a usuarios."
+    },
+    {
+      "name": "tbd_users_wishlist_products",
+      "columns": [
+        {
+          "name": "user_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_user2"
+          ],
+          "indexes": [
+            "PRIMARY KEY"
+          ]
+        },
+        {
+          "name": "product_ID",
+          "type": "int",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": true,
+          "zerofill": false,
+          "nullable": false,
+          "default": null,
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": true,
+          "fk": [
+            "fk_products3"
+          ],
+          "indexes": [
+            "PRIMARY KEY",
+            "fk_products3"
+          ]
+        },
+        {
+          "name": "status",
+          "type": "bit(1)",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "b'1'",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "creation_date",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": null,
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        },
+        {
+          "name": "last_update",
+          "type": "datetime",
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "unsigned": false,
+          "zerofill": false,
+          "nullable": true,
+          "default": "NULL",
+          "autoIncrement": false,
+          "generated": false,
+          "generatedStorage": null,
+          "onUpdate": "CURRENT_TIMESTAMP",
+          "enumValues": [],
+          "pk": false,
+          "fk": [],
+          "indexes": []
+        }
+      ],
+      "primaryKey": [
+        "user_ID",
+        "product_ID"
+      ],
+      "indexes": [
+        {
+          "name": "PRIMARY KEY",
+          "kind": "PRIMARY KEY",
+          "columns": [
+            "user_ID",
+            "product_ID"
+          ],
+          "details": null
+        },
+        {
+          "name": "fk_products3",
+          "kind": "KEY",
+          "columns": [
+            "product_ID"
+          ],
+          "details": null
+        }
+      ],
+      "foreignKeys": [
+        {
+          "name": "fk_products3",
+          "columns": [
+            "product_ID"
+          ],
+          "targetTable": "tb_products",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        },
+        {
+          "name": "fk_user2",
+          "columns": [
+            "user_ID"
+          ],
+          "targetTable": "tb_users",
+          "targetColumns": [
+            "ID"
+          ],
+          "onDelete": null,
+          "onUpdate": null
+        }
+      ],
+      "checks": [],
+      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Asociación de productos guardados por usuarios."
+    }
+  ],
+  "views": [
+    {
+      "name": "vw_address_hierarchical_details",
+      "definition": "select `comp`.`address_ID` AS `address_id`,`addr`.`address_label` AS `address_label`,`comp`.`ID` AS `component_id`,`comp`.`component_type` AS `component_type`,`comp`.`value` AS `component_value`,`parent`.`component_type` AS `parent_component_type`,`parent`.`value` AS `parent_component_value`,coalesce(cast(`comp`.`status` as unsigned),0) AS `component_status` from ((`tbd_address_components` `comp` join `tb_user_addresses` `addr` on((`comp`.`address_ID` = `addr`.`ID`))) left join `tbd_address_components` `parent` on(((`comp`.`address_ID` = `parent`.`address_ID`) and (`comp`.`address_sup_ID` = `parent`.`ID`)))) where (`comp`.`status` = 0x01)",
+      "columns": [
+        "address_id",
+        "address_label",
+        "component_id",
+        "component_type",
+        "component_value",
+        "parent_component_type",
+        "parent_component_value",
+        "component_status"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_people_details",
+      "definition": "select `tb_people`.`person_ID` AS `person_ID`,`tb_people`.`user_ID` AS `user_ID`,`tb_people`.`courtesy_title` AS `courtesy_title`,`tb_people`.`given_names` AS `given_names`,`tb_people`.`family_names` AS `family_names`,concat(`tb_people`.`given_names`,' ',coalesce(`tb_people`.`family_names`,'')) AS `full_name`,`tb_people`.`birth_date` AS `birth_date`,`tb_people`.`gender` AS `gender`,`tb_people`.`country_code` AS `country_code`,`tb_people`.`phone` AS `phone`,coalesce(cast(`tb_people`.`status` as unsigned),0) AS `status`,`tb_people`.`creation_date` AS `creation_date`,`tb_people`.`last_update` AS `last_update` from `tb_people`",
+      "columns": [
+        "person_ID",
+        "user_ID",
+        "courtesy_title",
+        "given_names",
+        "family_names",
+        "full_name",
+        "birth_date",
+        "gender",
+        "country_code",
+        "phone",
+        "status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_carts",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_carts` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) where (`l`.`table_name` = 'tb_carts')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_order_cancellations",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`requested_by` AS `requested_by`,`u`.`nick` AS `requested_by_nick`,`u`.`email` AS `requested_by_email`,`t`.`status` AS `current_cancellation_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_order_cancellations` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`requested_by`))) where (`l`.`table_name` = 'tb_order_cancellations')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "requested_by",
+        "requested_by_nick",
+        "requested_by_email",
+        "current_cancellation_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_orders",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`seller_ID` AS `seller_ID`,`u`.`nick` AS `seller_nick`,`u`.`email` AS `seller_email`,`t`.`subtotal` AS `subtotal`,`t`.`shipping_cost` AS `shipping_cost`,`t`.`fulfillment_status` AS `fulfillment_status`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_orders` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`seller_ID`))) where (`l`.`table_name` = 'tb_orders')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "seller_ID",
+        "seller_nick",
+        "seller_email",
+        "subtotal",
+        "shipping_cost",
+        "fulfillment_status",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_payment_methods",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`name` AS `payment_method_name`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_payment_methods` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_payment_methods')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "payment_method_name",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_payment_transaction",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`payment_ID` AS `payment_ID`,`p`.`order_ID` AS `order_ID`,`t`.`transaction_reference` AS `transaction_reference`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_payment_transaction` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_payments` `p` on((`p`.`ID` = `t`.`payment_ID`))) where (`l`.`table_name` = 'tb_payment_transaction')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "payment_ID",
+        "order_ID",
+        "transaction_reference",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_payments",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`user_payment_method_ID` AS `user_payment_method_ID`,`m`.`user_ID` AS `payer_user_ID`,`u`.`nick` AS `payer_nick`,`t`.`amount` AS `amount`,`t`.`payment_status` AS `payment_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (((`tb_logs` `l` left join `tb_payments` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tbd_user_payment_methods` `m` on((`m`.`ID` = `t`.`user_payment_method_ID`))) left join `tb_users` `u` on((`u`.`ID` = `m`.`user_ID`))) where (`l`.`table_name` = 'tb_payments')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "user_payment_method_ID",
+        "payer_user_ID",
+        "payer_nick",
+        "amount",
+        "payment_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_people",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,concat(`t`.`given_names`,' ',coalesce(`t`.`family_names`,'')) AS `full_name`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_people` `t` on((`t`.`person_ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) where (`l`.`table_name` = 'tb_people')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "full_name",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_products",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`SKU` AS `product_SKU`,`t`.`name` AS `product_name`,`t`.`current_price` AS `current_price`,`t`.`current_stock` AS `current_stock`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_products` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_products')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "product_SKU",
+        "product_name",
+        "current_price",
+        "current_stock",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_refunds",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`payment_ID` AS `payment_ID`,`p`.`order_ID` AS `order_ID`,`t`.`amount` AS `amount`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_refunds` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_payments` `p` on((`p`.`ID` = `t`.`payment_ID`))) where (`l`.`table_name` = 'tb_refunds')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "payment_ID",
+        "order_ID",
+        "amount",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_returns",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`requested_by` AS `requested_by`,`u`.`nick` AS `requested_by_nick`,`u`.`email` AS `requested_by_email`,`t`.`status` AS `current_return_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_returns` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`requested_by`))) where (`l`.`table_name` = 'tb_returns')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "requested_by",
+        "requested_by_nick",
+        "requested_by_email",
+        "current_return_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_shipments",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`tracking_number` AS `tracking_number`,`t`.`carrier` AS `carrier`,`t`.`shipping_status` AS `shipping_status`,`t`.`shipped_date` AS `shipped_date`,`t`.`delivered_date` AS `delivered_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_shipments` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_shipments')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "tracking_number",
+        "carrier",
+        "shipping_status",
+        "shipped_date",
+        "delivered_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_user_addresses",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`t`.`address_label` AS `address_label`,`t`.`recipient_name` AS `recipient_name`,`t`.`is_default` AS `is_default`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_user_addresses` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) where (`l`.`table_name` = 'tb_user_addresses')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "address_label",
+        "recipient_name",
+        "is_default",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_users",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`email` AS `email`,`t`.`nick` AS `nick`,`t`.`last_login` AS `last_login`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_users` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_users')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "email",
+        "nick",
+        "last_login",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbc_categories",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`name` AS `category_name`,`t`.`sup_id_category` AS `sup_id_category`,`pc`.`name` AS `parent_category_name`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tbc_categories` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tbc_categories` `pc` on((`pc`.`ID` = `t`.`sup_id_category`))) where (`l`.`table_name` = 'tbc_categories')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "category_name",
+        "sup_id_category",
+        "parent_category_name",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbc_payment_methods_types",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`code` AS `type_code`,`t`.`description` AS `type_description`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tbc_payment_methods_types` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbc_payment_methods_types')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "type_code",
+        "type_description",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_address_components",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`address_ID` AS `address_ID`,`a`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`a`.`address_label` AS `address_label`,`t`.`component_type` AS `component_type`,`t`.`value` AS `component_value`,`t`.`address_sup_ID` AS `address_sup_ID`,`pa`.`component_type` AS `parent_component_type`,`pa`.`value` AS `parent_component_value`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((((`tb_logs` `l` left join `tbd_address_components` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_user_addresses` `a` on((`a`.`ID` = `t`.`address_ID`))) left join `tb_users` `u` on((`u`.`ID` = `a`.`user_ID`))) left join `tbd_address_components` `pa` on(((`pa`.`address_ID` = `t`.`address_ID`) and (`pa`.`ID` = `t`.`address_sup_ID`)))) where (`l`.`table_name` = 'tbd_address_components')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "address_ID",
+        "user_ID",
+        "user_nick",
+        "address_label",
+        "component_type",
+        "component_value",
+        "address_sup_ID",
+        "parent_component_type",
+        "parent_component_value",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_cancellation_items",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`cancellation_ID` AS `cancellation_ID`,`t`.`order_ID` AS `order_ID`,`t`.`requested_by` AS `requested_by`,`u`.`nick` AS `requested_by_nick`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tbd_cancellation_items` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`requested_by`))) where (`l`.`table_name` = 'tbd_cancellation_items')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "cancellation_ID",
+        "order_ID",
+        "requested_by",
+        "requested_by_nick",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_cart_items",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `cart_ID`,`c`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email` from ((`tb_logs` `l` left join `tb_carts` `c` on((`c`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `c`.`user_ID`))) where (`l`.`table_name` = 'tbd_cart_items')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "cart_ID",
+        "user_ID",
+        "user_nick",
+        "user_email"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_order_items",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`seller_order_ID` AS `seller_order_ID`,`t`.`product_ID` AS `product_ID`,`t`.`provider_ID` AS `provider_ID`,`u`.`nick` AS `provider_nick`,`t`.`product_name` AS `product_name`,`t`.`quantity` AS `quantity`,`t`.`unit_price` AS `unit_price`,`t`.`subtotal` AS `item_subtotal`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tbd_order_items` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`provider_ID`))) where (`l`.`table_name` = 'tbd_order_items')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "seller_order_ID",
+        "product_ID",
+        "provider_ID",
+        "provider_nick",
+        "product_name",
+        "quantity",
+        "unit_price",
+        "item_subtotal",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_products_categories",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `product_ID`,`p`.`SKU` AS `product_SKU`,`p`.`name` AS `product_name` from (`tb_logs` `l` left join `tb_products` `p` on((`p`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_products_categories')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "product_ID",
+        "product_SKU",
+        "product_name"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_products_users_providers",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `product_ID`,`p`.`SKU` AS `product_SKU`,`p`.`name` AS `product_name` from (`tb_logs` `l` left join `tb_products` `p` on((`p`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_products_users_providers')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "product_ID",
+        "product_SKU",
+        "product_name"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_return_items",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`return_ID` AS `return_ID`,`t`.`order_ID` AS `order_ID`,`t`.`status` AS `current_return_item_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tbd_return_items` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_return_items')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "return_ID",
+        "order_ID",
+        "current_return_item_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_user_payment_methods",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`t`.`payment_method_type_ID` AS `payment_method_type_ID`,`ty`.`code` AS `type_code`,`t`.`provider` AS `provider`,`t`.`label` AS `label`,`t`.`last_four` AS `last_four`,`t`.`is_default` AS `is_default`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (((`tb_logs` `l` left join `tbd_user_payment_methods` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) left join `tbc_payment_methods_types` `ty` on((`ty`.`ID` = `t`.`payment_method_type_ID`))) where (`l`.`table_name` = 'tbd_user_payment_methods')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "payment_method_type_ID",
+        "type_code",
+        "provider",
+        "label",
+        "last_four",
+        "is_default",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_users_wishlist_products",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email` from (`tb_logs` `l` left join `tb_users` `u` on((`u`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_users_wishlist_products')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_user_default_shipping_addresses",
+      "definition": "select `addr`.`ID` AS `address_id`,`addr`.`user_ID` AS `user_id`,`u`.`email` AS `user_email`,`addr`.`address_label` AS `address_label`,`addr`.`recipient_name` AS `recipient_name`,`addr`.`recipient_phone` AS `recipient_phone`,`addr`.`delivery_instructions` AS `delivery_instructions`,`addr`.`latitude` AS `latitude`,`addr`.`longitude` AS `longitude`,`addr`.`creation_date` AS `address_creation_date` from (`tb_user_addresses` `addr` join `tb_users` `u` on((`addr`.`user_ID` = `u`.`ID`))) where ((`addr`.`is_default` = 1) and (`addr`.`status` = 0x01) and (`u`.`status` = 0x01))",
+      "columns": [
+        "address_id",
+        "user_id",
+        "user_email",
+        "address_label",
+        "recipient_name",
+        "recipient_phone",
+        "delivery_instructions",
+        "latitude",
+        "longitude",
+        "address_creation_date"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_wishlist_carritos",
+      "definition": "select `w`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`w`.`product_ID` AS `product_ID`,`p`.`SKU` AS `product_SKU`,`p`.`name` AS `product_name`,`p`.`current_price` AS `product_price`,cast(`w`.`status` as unsigned) AS `wishlist_status`,`w`.`creation_date` AS `wishlist_creation_date`,`w`.`last_update` AS `wishlist_last_update`,`c`.`ID` AS `cart_ID`,cast(`c`.`status` as unsigned) AS `cart_status`,`c`.`creation_date` AS `cart_creation_date`,`c`.`last_update` AS `cart_last_update` from (((`tbd_users_wishlist_products` `w` join `tb_users` `u` on((`u`.`ID` = `w`.`user_ID`))) join `tb_products` `p` on((`p`.`ID` = `w`.`product_ID`))) left join `tb_carts` `c` on((`c`.`user_ID` = `w`.`user_ID`)))",
+      "columns": [
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "product_ID",
+        "product_SKU",
+        "product_name",
+        "product_price",
+        "wishlist_status",
+        "wishlist_creation_date",
+        "wishlist_last_update",
+        "cart_ID",
+        "cart_status",
+        "cart_creation_date",
+        "cart_last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    }
+  ]
+}

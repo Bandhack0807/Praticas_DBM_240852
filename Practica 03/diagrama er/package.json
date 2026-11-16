@@ -1,0 +1,1 @@
+{"name":"explorador-er-practica-03","version":"1.0.0","private":true,"description":"Explorador ER educativo offline","scripts":{"start":"node server.js"},"engines":{"node":">=18"}}

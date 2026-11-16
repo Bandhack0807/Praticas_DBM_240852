@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `db_test_7b` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `db_test_7b`;
--- MySQL dump 10.13  Distrib 8.0.44, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.46, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_test_victor_7b
+-- Host: localhost    Database: db_test_7b
 -- ------------------------------------------------------
--- Server version	8.0.44
+-- Server version	8.4.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,6 +16,199 @@ USE `db_test_7b`;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `tb_categories`
+--
+
+DROP TABLE IF EXISTS `tb_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tb_categories` (
+  `ID` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(120) NOT NULL,
+  `description` text,
+  `sup_id_category` int unsigned DEFAULT NULL,
+  `status` bit(1) NOT NULL DEFAULT b'1',
+  `creation_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_update` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `name` (`name`),
+  KEY `fk_superior_category` (`sup_id_category`),
+  CONSTRAINT `fk_superior_category` FOREIGN KEY (`sup_id_category`) REFERENCES `tb_categories` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_categories`
+--
+
+LOCK TABLES `tb_categories` WRITE;
+/*!40000 ALTER TABLE `tb_categories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tb_categories` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`Victor.Manuel`@`%`*/ /*!50003 TRIGGER `trg_tbc_categories_after_insert` AFTER INSERT ON `tb_categories` FOR EACH ROW BEGIN
+    INSERT INTO tb_logs (
+        table_name,
+        record_id,
+        table_operation,
+        db_user,
+        table_description
+    )
+    VALUES (
+        'tb_categories',
+        NEW.ID,
+        'Create',
+        USER(),
+        CONCAT(
+            'Categor�a creada: "',
+            NEW.name,
+            '". Descripci�n: ',
+            COALESCE(NEW.description, 'NULL'),
+            ', Categor�a superior: ',
+            COALESCE(CAST(NEW.sup_id_category AS CHAR), 'NULL'),
+            ', Status: ',
+            CAST(NEW.status AS UNSIGNED)
+        )
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`Victor.Manuel`@`%`*/ /*!50003 TRIGGER `trg_tbc_categories_after_update` AFTER UPDATE ON `tb_categories` FOR EACH ROW BEGIN
+    DECLARE changes_detail TEXT DEFAULT '';
+
+    IF NOT (OLD.name <=> NEW.name) THEN
+        SET changes_detail = CONCAT(
+            changes_detail,
+            'Nombre: "',
+            OLD.name,
+            '" -> "',
+            NEW.name,
+            '"; '
+        );
+    END IF;
+
+    IF NOT (OLD.description <=> NEW.description) THEN
+        SET changes_detail = CONCAT(
+            changes_detail,
+            'Descripci�n: "',
+            COALESCE(OLD.description, 'NULL'),
+            '" -> "',
+            COALESCE(NEW.description, 'NULL'),
+            '"; '
+        );
+    END IF;
+
+    IF NOT (OLD.sup_id_category <=> NEW.sup_id_category) THEN
+        SET changes_detail = CONCAT(
+            changes_detail,
+            'Categor�a superior: ',
+            COALESCE(CAST(OLD.sup_id_category AS CHAR), 'NULL'),
+            ' -> ',
+            COALESCE(CAST(NEW.sup_id_category AS CHAR), 'NULL'),
+            '; '
+        );
+    END IF;
+
+    IF NOT (OLD.status <=> NEW.status) THEN
+        SET changes_detail = CONCAT(
+            changes_detail,
+            'Estado: ',
+            CAST(OLD.status AS UNSIGNED),
+            ' -> ',
+            CAST(NEW.status AS UNSIGNED),
+            '; '
+        );
+    END IF;
+
+    IF changes_detail <> '' THEN
+        INSERT INTO tb_logs (
+            table_name,
+            record_id,
+            table_operation,
+            db_user,
+            table_description
+        )
+        VALUES (
+            'tb_categories',
+            NEW.ID,
+            'Update',
+            USER(),
+            TRIM(changes_detail)
+        );
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`Victor.Manuel`@`%`*/ /*!50003 TRIGGER `trg_tbc_categories_after_delete` AFTER DELETE ON `tb_categories` FOR EACH ROW BEGIN
+    INSERT INTO tb_logs (
+        table_name,
+        record_id,
+        table_operation,
+        db_user,
+        table_description,
+        operation_date,
+        operation_status
+    )
+    VALUES (
+        'tb_categories',
+        OLD.ID,
+        'Delete',
+        USER(),
+        CONCAT(
+            'Categor�a eliminada. ID=',
+            OLD.ID,
+            ', nombre=',
+            OLD.name,
+            ', descripcion=',
+            COALESCE(OLD.description, 'NULL'),
+            ', categoria_superior=',
+            COALESCE(CAST(OLD.sup_id_category AS CHAR), 'NULL'),
+            ', status=',
+            COALESCE(CAST(OLD.status AS UNSIGNED), 0)
+        ),
+        CURRENT_TIMESTAMP,
+        b'1'
+    );
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `tb_logs`
@@ -439,6 +632,26 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Temporary view structure for view `vw_trazabilidad_categorias`
+--
+
+DROP TABLE IF EXISTS `vw_trazabilidad_categorias`;
+/*!50001 DROP VIEW IF EXISTS `vw_trazabilidad_categorias`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vw_trazabilidad_categorias` AS SELECT 
+ 1 AS `category_id`,
+ 1 AS `category_name`,
+ 1 AS `description`,
+ 1 AS `superior_category_id`,
+ 1 AS `superior_category_name`,
+ 1 AS `status`,
+ 1 AS `status_description`,
+ 1 AS `creation_date`,
+ 1 AS `last_update`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `vw_trazabilidad_productos`
 --
 
@@ -585,6 +798,24 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Final view structure for view `vw_trazabilidad_categorias`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_trazabilidad_categorias`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Victor.Manuel`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_trazabilidad_categorias` AS select `c`.`ID` AS `category_id`,`c`.`name` AS `category_name`,`c`.`description` AS `description`,`c`.`sup_id_category` AS `superior_category_id`,`sc`.`name` AS `superior_category_name`,`c`.`status` AS `status`,(case when (`c`.`status` = 0x01) then 'Activo' else 'Inactivo' end) AS `status_description`,`c`.`creation_date` AS `creation_date`,`c`.`last_update` AS `last_update` from (`tb_categories` `c` left join `tb_categories` `sc` on((`c`.`sup_id_category` = `sc`.`ID`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `vw_trazabilidad_productos`
 --
 
@@ -629,4 +860,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-10-07  8:20:10
+-- Dump completed on 2026-10-07 12:36:45
