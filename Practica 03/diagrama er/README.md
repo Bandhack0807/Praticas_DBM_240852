@@ -1,6 +1,6 @@
 # Explorador ER interactivo
 
-Aplicación de esquema offline con animaciones educativas. Está basada en las mismas definiciones DDL que el diccionario. Los registros de las animaciones son **ejemplos simulados**, no filas del respaldo; no hay operaciones contra MySQL.
+Aplicación de esquema offline con animaciones educativas. Está basada en `respaldo_10_11_26.sql`, igual que el diccionario. Los registros de las animaciones son **ejemplos simulados**, no filas del respaldo; no hay operaciones contra MySQL.
 
 ## Ejecución local
 

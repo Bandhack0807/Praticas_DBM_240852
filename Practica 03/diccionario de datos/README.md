@@ -1,6 +1,6 @@
 # Diccionario de datos
 
-Consulta estática generada desde `respaldo_31_10_26.sql`, el respaldo completo más reciente disponible en `Practica 03/Backup`. Incluye metadatos de tablas y vistas y no publica filas de datos. La consulta funciona sin MySQL ni conexión de red.
+Consulta estática generada desde `respaldo_10_11_26.sql`. Incluye metadatos de tablas y vistas y no publica filas de datos. La consulta funciona sin MySQL ni conexión de red.
 
 ## Requisitos y uso
 

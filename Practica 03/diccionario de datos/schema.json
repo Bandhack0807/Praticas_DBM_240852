@@ -1,5 +1,5 @@
 {
-  "source": "respaldo_31_10_26.sql",
+  "source": "respaldo_10_11_26.sql",
   "database": "db_test_victor_7b",
   "server": "MySQL 8.4.9",
   "tables": [
@@ -362,7 +362,7 @@
       ],
       "foreignKeys": [],
       "checks": [],
-      "engine": "InnoDB AUTO_INCREMENT=15007 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "engine": "InnoDB AUTO_INCREMENT=66438 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
       "description": "Bitácora de operaciones registradas sobre entidades."
     },
     {
@@ -1751,8 +1751,8 @@
           "scale": null,
           "unsigned": false,
           "zerofill": false,
-          "nullable": false,
-          "default": "CURRENT_TIMESTAMP",
+          "nullable": true,
+          "default": "NULL",
           "autoIncrement": false,
           "generated": false,
           "generatedStorage": null,
@@ -1786,8 +1786,9 @@
       ],
       "foreignKeys": [],
       "checks": [],
-      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Catálogo de productos."
+      "engine": "InnoDB AUTO_INCREMENT=8192 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Catálogo de productos.",
+      "rowCount": 4119
     },
     {
       "name": "tb_refunds",
@@ -3063,8 +3064,9 @@
         }
       ],
       "checks": [],
-      "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Catálogo jerárquico de categorías."
+      "engine": "InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+      "description": "Catálogo jerárquico de categorías.",
+      "rowCount": 100
     },
     {
       "name": "tbc_payment_methods_types",
@@ -4309,7 +4311,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Asociación entre productos y categorías."
+      "description": "Asociación entre productos y categorías.",
+      "rowCount": 20914
     },
     {
       "name": "tbd_products_users_providers",
@@ -4401,7 +4404,7 @@
           "indexes": []
         },
         {
-          "name": "available_date",
+          "name": "avalaible_date",
           "type": "datetime",
           "length": null,
           "precision": null,
@@ -5196,47 +5199,6 @@
   ],
   "views": [
     {
-      "name": "tb_categories",
-      "definition": "select `tbc_categories`.`ID` AS `ID`,`tbc_categories`.`name` AS `name`,`tbc_categories`.`description` AS `description`,`tbc_categories`.`sup_id_category` AS `sup_id_category`,`tbc_categories`.`status` AS `status`,`tbc_categories`.`creation_date` AS `creation_date`,`tbc_categories`.`last_update` AS `last_update` from `tbc_categories`",
-      "columns": [
-        "ID",
-        "name",
-        "description",
-        "sup_id_category",
-        "status",
-        "creation_date",
-        "last_update"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "tb_product_categories",
-      "definition": "select `tbd_products_categories`.`product_Id` AS `product_ID`,`tbd_products_categories`.`category_Id` AS `category_ID`,`tbd_products_categories`.`status` AS `status`,`tbd_products_categories`.`creation_date` AS `creation_date`,`tbd_products_categories`.`last_update` AS `last_update` from `tbd_products_categories`",
-      "columns": [
-        "product_ID",
-        "category_ID",
-        "status",
-        "creation_date",
-        "last_update"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "tb_products_users_providers",
-      "definition": "select `tbd_products_users_providers`.`user_ID` AS `user_ID`,`tbd_products_users_providers`.`product_ID` AS `product_ID`,`tbd_products_users_providers`.`type_ownership` AS `type_ownership`,`tbd_products_users_providers`.`status` AS `status`,`tbd_products_users_providers`.`available_date` AS `available_date`,`tbd_products_users_providers`.`creation_date` AS `creation_date`,`tbd_products_users_providers`.`last_date` AS `last_date`,`tbd_products_users_providers`.`last_update` AS `last_update` from `tbd_products_users_providers`",
-      "columns": [
-        "user_ID",
-        "product_ID",
-        "type_ownership",
-        "status",
-        "available_date",
-        "creation_date",
-        "last_date",
-        "last_update"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
       "name": "vw_address_hierarchical_details",
       "definition": "select `comp`.`address_ID` AS `address_id`,`addr`.`address_label` AS `address_label`,`comp`.`ID` AS `component_id`,`comp`.`component_type` AS `component_type`,`comp`.`value` AS `component_value`,`parent`.`component_type` AS `parent_component_type`,`parent`.`value` AS `parent_component_value`,coalesce(cast(`comp`.`status` as unsigned),0) AS `component_status` from ((`tbd_address_components` `comp` join `tb_user_addresses` `addr` on((`comp`.`address_ID` = `addr`.`ID`))) left join `tbd_address_components` `parent` on(((`comp`.`address_ID` = `parent`.`address_ID`) and (`comp`.`address_sup_ID` = `parent`.`ID`)))) where (`comp`.`status` = 0x01)",
       "columns": [
@@ -5272,103 +5234,344 @@
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
-      "name": "vw_total_products_by_category",
-      "definition": "with recursive `category_tree` as (select `c`.`ID` AS `category_id`,`c`.`name` AS `category_name`,`c`.`sup_id_category` AS `parent_category_id`,cast(`c`.`name` as char(2000) charset utf8mb4) AS `category_path`,1 AS `category_level` from `tbc_categories` `c` where (`c`.`sup_id_category` is null) union all select `c`.`ID` AS `category_id`,`c`.`name` AS `category_name`,`c`.`sup_id_category` AS `parent_category_id`,cast(concat(`ct`.`category_path`,'-',`c`.`name`) as char(2000) charset utf8mb4) AS `category_path`,(`ct`.`category_level` + 1) AS `category_level` from (`tbc_categories` `c` join `category_tree` `ct` on((`c`.`sup_id_category` = `ct`.`category_id`)))) select `ct`.`category_id` AS `category_id`,`ct`.`category_path` AS `category_path`,`ct`.`category_level` AS `category_level`,count(distinct (case when (`pc`.`status` = 0x01) then `p`.`ID` end)) AS `total_products`,count(distinct (case when ((`pc`.`status` = 0x01) and (`p`.`status` = 0x01)) then `p`.`ID` end)) AS `total_active_products`,count(distinct (case when ((`pc`.`status` = 0x01) and (`p`.`status` = 0x00)) then `p`.`ID` end)) AS `total_inactive_products`,(select count(0) from `tb_products` `pu` where exists(select 1 from `tbd_products_categories` `pcu` where ((`pcu`.`product_Id` = `pu`.`ID`) and (`pcu`.`status` = 0x01))) is false) AS `total_uncategorized_products` from ((`category_tree` `ct` left join `tbd_products_categories` `pc` on((`pc`.`category_Id` = `ct`.`category_id`))) left join `tb_products` `p` on((`p`.`ID` = `pc`.`product_Id`))) group by `ct`.`category_id`,`ct`.`category_path`,`ct`.`category_level`",
-      "columns": [
-        "category_id",
-        "category_name",
-        "parent_category_id",
-        "category_path",
-        "category_level"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_carritos",
-      "definition": "select `l`.`ID` AS `log_ID`,`l`.`record_id` AS `cart_ID`,`c`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,(`c`.`status` + 0) AS `cart_current_status`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `table_operation`,`l`.`table_description` AS `table_description`,`l`.`db_user` AS `db_user`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from ((`tb_logs` `l` left join `tb_carts` `c` on((`c`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `c`.`user_ID`))) where (`l`.`table_name` = 'tb_carts')",
+      "name": "vw_trazabilidad_tb_carts",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_carts` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) where (`l`.`table_name` = 'tb_carts')",
       "columns": [
         "log_ID",
-        "cart_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
         "user_ID",
         "user_nick",
         "user_email",
-        "cart_current_status",
-        "table_name",
-        "table_operation",
-        "table_description",
-        "db_user",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_carts_items",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `cart_ID`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_cart_items')",
-      "columns": [
-        "log_id",
-        "cart_ID",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_categorias",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `category_id`,`c`.`name` AS `category_name`,`c`.`description` AS `category_description`,`c`.`sup_id_category` AS `superior_category_id`,`sup`.`name` AS `superior_category_name`,cast(`c`.`status` as unsigned) AS `current_status`,`c`.`creation_date` AS `creation_date`,`c`.`last_update` AS `last_update`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from ((`tb_logs` `l` left join `tbc_categories` `c` on((`c`.`ID` = `l`.`record_id`))) left join `tbc_categories` `sup` on((`sup`.`ID` = `c`.`sup_id_category`))) where (`l`.`table_name` in ('tb_categories','tbc_categories'))",
-      "columns": [
-        "log_id",
-        "category_id",
-        "category_name",
-        "category_description",
-        "superior_category_id",
-        "superior_category_name",
         "current_status",
         "creation_date",
-        "last_update",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
-      "name": "vw_trazabilidad_categorizacion_productos",
-      "definition": "select `a`.`ID` AS `log_id`,`a`.`record_id` AS `product_id`,`p`.`SKU` AS `product_sku`,`p`.`name` AS `product_name`,`a`.`category_id` AS `category_id`,`c`.`name` AS `category_name`,`pc`.`status` AS `current_categorization_status`,`pc`.`creation_date` AS `categorization_creation_date`,`pc`.`last_update` AS `categorization_last_update`,`a`.`table_operation` AS `operation_type`,`a`.`db_user` AS `performed_by`,`a`.`table_description` AS `operation_description`,`a`.`operation_date` AS `operation_date`,`a`.`operation_status` AS `operation_status` from ((((select `l`.`ID` AS `ID`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status`,(case when ((`l`.`table_operation` = 'Update') and (regexp_substr(`l`.`table_description`,'[Cc]ategoria:[[:space:]]*[0-9]+[[:space:]]*->[[:space:]]*[0-9]+') is not null)) then cast(regexp_substr(regexp_substr(`l`.`table_description`,'[Cc]ategoria:[[:space:]]*[0-9]+[[:space:]]*->[[:space:]]*[0-9]+'),'[0-9]+',1,2) as unsigned) when (regexp_substr(`l`.`table_description`,'[Cc]ategoria[:=][[:space:]]*[0-9]+') is not null) then cast(regexp_substr(regexp_substr(`l`.`table_description`,'[Cc]ategoria[:=][[:space:]]*[0-9]+'),'[0-9]+') as unsigned) else NULL end) AS `category_id` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_products_categories')) `a` left join `tb_products` `p` on((`p`.`ID` = `a`.`record_id`))) left join `tbc_categories` `c` on((`c`.`ID` = `a`.`category_id`))) left join `tbd_products_categories` `pc` on(((`pc`.`product_Id` = `a`.`record_id`) and (`pc`.`category_Id` = `a`.`category_id`))))",
+      "name": "vw_trazabilidad_tb_order_cancellations",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`requested_by` AS `requested_by`,`u`.`nick` AS `requested_by_nick`,`u`.`email` AS `requested_by_email`,`t`.`status` AS `current_cancellation_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_order_cancellations` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`requested_by`))) where (`l`.`table_name` = 'tb_order_cancellations')",
       "columns": [
-        "log_id",
-        "product_id",
-        "product_sku",
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "requested_by",
+        "requested_by_nick",
+        "requested_by_email",
+        "current_cancellation_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_orders",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`seller_ID` AS `seller_ID`,`u`.`nick` AS `seller_nick`,`u`.`email` AS `seller_email`,`t`.`subtotal` AS `subtotal`,`t`.`shipping_cost` AS `shipping_cost`,`t`.`fulfillment_status` AS `fulfillment_status`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_orders` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`seller_ID`))) where (`l`.`table_name` = 'tb_orders')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "seller_ID",
+        "seller_nick",
+        "seller_email",
+        "subtotal",
+        "shipping_cost",
+        "fulfillment_status",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_payment_methods",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`name` AS `payment_method_name`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_payment_methods` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_payment_methods')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "payment_method_name",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_payment_transaction",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`payment_ID` AS `payment_ID`,`p`.`order_ID` AS `order_ID`,`t`.`transaction_reference` AS `transaction_reference`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_payment_transaction` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_payments` `p` on((`p`.`ID` = `t`.`payment_ID`))) where (`l`.`table_name` = 'tb_payment_transaction')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "payment_ID",
+        "order_ID",
+        "transaction_reference",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_payments",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`user_payment_method_ID` AS `user_payment_method_ID`,`m`.`user_ID` AS `payer_user_ID`,`u`.`nick` AS `payer_nick`,`t`.`amount` AS `amount`,`t`.`payment_status` AS `payment_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (((`tb_logs` `l` left join `tb_payments` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tbd_user_payment_methods` `m` on((`m`.`ID` = `t`.`user_payment_method_ID`))) left join `tb_users` `u` on((`u`.`ID` = `m`.`user_ID`))) where (`l`.`table_name` = 'tb_payments')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "user_payment_method_ID",
+        "payer_user_ID",
+        "payer_nick",
+        "amount",
+        "payment_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_people",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,concat(`t`.`given_names`,' ',coalesce(`t`.`family_names`,'')) AS `full_name`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_people` `t` on((`t`.`person_ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) where (`l`.`table_name` = 'tb_people')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "full_name",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_products",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`SKU` AS `product_SKU`,`t`.`name` AS `product_name`,`t`.`current_price` AS `current_price`,`t`.`current_stock` AS `current_stock`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_products` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_products')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "product_SKU",
         "product_name",
-        "category_id",
-        "category_name",
-        "current_categorization_status",
-        "categorization_creation_date",
-        "categorization_last_update",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
+        "current_price",
+        "current_stock",
+        "current_status",
+        "creation_date",
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
-      "name": "vw_trazabilidad_componentes_direccion",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `component_ID`,`a`.`ID` AS `address_ID`,`a`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`a`.`address_label` AS `address_label`,`comp`.`component_type` AS `component_type`,`comp`.`value` AS `component_value`,`comp`.`address_sup_ID` AS `address_sup_ID`,`parent`.`component_type` AS `parent_component_type`,`parent`.`value` AS `parent_component_value`,cast(`comp`.`status` as unsigned) AS `current_status`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from ((((`tb_logs` `l` left join `tbd_address_components` `comp` on((`comp`.`ID` = `l`.`record_id`))) left join `tb_user_addresses` `a` on((`a`.`ID` = `comp`.`address_ID`))) left join `tb_users` `u` on((`u`.`ID` = `a`.`user_ID`))) left join `tbd_address_components` `parent` on(((`parent`.`ID` = `comp`.`address_sup_ID`) and (`parent`.`address_ID` = `comp`.`address_ID`)))) where (`l`.`table_name` = 'tbd_address_components')",
+      "name": "vw_trazabilidad_tb_refunds",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`payment_ID` AS `payment_ID`,`p`.`order_ID` AS `order_ID`,`t`.`amount` AS `amount`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_refunds` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_payments` `p` on((`p`.`ID` = `t`.`payment_ID`))) where (`l`.`table_name` = 'tb_refunds')",
       "columns": [
-        "log_id",
-        "component_ID",
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "payment_ID",
+        "order_ID",
+        "amount",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_returns",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`requested_by` AS `requested_by`,`u`.`nick` AS `requested_by_nick`,`u`.`email` AS `requested_by_email`,`t`.`status` AS `current_return_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_returns` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`requested_by`))) where (`l`.`table_name` = 'tb_returns')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "requested_by",
+        "requested_by_nick",
+        "requested_by_email",
+        "current_return_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_shipments",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`order_ID` AS `order_ID`,`t`.`tracking_number` AS `tracking_number`,`t`.`carrier` AS `carrier`,`t`.`shipping_status` AS `shipping_status`,`t`.`shipped_date` AS `shipped_date`,`t`.`delivered_date` AS `delivered_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_shipments` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_shipments')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "order_ID",
+        "tracking_number",
+        "carrier",
+        "shipping_status",
+        "shipped_date",
+        "delivered_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_user_addresses",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`t`.`address_label` AS `address_label`,`t`.`recipient_name` AS `recipient_name`,`t`.`is_default` AS `is_default`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tb_user_addresses` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) where (`l`.`table_name` = 'tb_user_addresses')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "address_label",
+        "recipient_name",
+        "is_default",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tb_users",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`email` AS `email`,`t`.`nick` AS `nick`,`t`.`last_login` AS `last_login`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tb_users` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_users')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "email",
+        "nick",
+        "last_login",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbc_categories",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`name` AS `category_name`,`t`.`sup_id_category` AS `sup_id_category`,`pc`.`name` AS `parent_category_name`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tbc_categories` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tbc_categories` `pc` on((`pc`.`ID` = `t`.`sup_id_category`))) where (`l`.`table_name` = 'tbc_categories')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "category_name",
+        "sup_id_category",
+        "parent_category_name",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbc_payment_methods_types",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`code` AS `type_code`,`t`.`description` AS `type_description`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tbc_payment_methods_types` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbc_payment_methods_types')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
+        "type_code",
+        "type_description",
+        "current_status",
+        "creation_date",
+        "last_update"
+      ],
+      "description": "Vista restaurada por el respaldo; consulta derivada."
+    },
+    {
+      "name": "vw_trazabilidad_tbd_address_components",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`address_ID` AS `address_ID`,`a`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`a`.`address_label` AS `address_label`,`t`.`component_type` AS `component_type`,`t`.`value` AS `component_value`,`t`.`address_sup_ID` AS `address_sup_ID`,`pa`.`component_type` AS `parent_component_type`,`pa`.`value` AS `parent_component_value`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((((`tb_logs` `l` left join `tbd_address_components` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_user_addresses` `a` on((`a`.`ID` = `t`.`address_ID`))) left join `tb_users` `u` on((`u`.`ID` = `a`.`user_ID`))) left join `tbd_address_components` `pa` on(((`pa`.`address_ID` = `t`.`address_ID`) and (`pa`.`ID` = `t`.`address_sup_ID`)))) where (`l`.`table_name` = 'tbd_address_components')",
+      "columns": [
+        "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
         "address_ID",
         "user_ID",
         "user_nick",
-        "user_email",
         "address_label",
         "component_type",
         "component_value",
@@ -5376,552 +5579,174 @@
         "parent_component_type",
         "parent_component_value",
         "current_status",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_direcciones",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `address_ID`,`a`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`a`.`address_label` AS `address_label`,`a`.`recipient_name` AS `recipient_name`,`a`.`recipient_phone` AS `recipient_phone`,`a`.`delivery_instructions` AS `delivery_instructions`,`a`.`latitude` AS `latitude`,`a`.`longitude` AS `longitude`,`a`.`is_default` AS `is_default`,cast(`a`.`status` as unsigned) AS `current_status`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from ((`tb_logs` `l` left join `tb_user_addresses` `a` on((`a`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `a`.`user_ID`))) where (`l`.`table_name` = 'tb_user_addresses')",
-      "columns": [
-        "log_id",
-        "address_ID",
-        "user_ID",
-        "user_nick",
-        "user_email",
-        "address_label",
-        "recipient_name",
-        "recipient_phone",
-        "delivery_instructions",
-        "latitude",
-        "longitude",
-        "is_default",
-        "current_status",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_order_items",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `item_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_order_items')",
-      "columns": [
-        "log_id",
-        "item_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_personas",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `person_ID`,`p`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`p`.`courtesy_title` AS `courtesy_title`,`p`.`given_names` AS `given_names`,`p`.`family_names` AS `family_names`,concat(`p`.`given_names`,' ',coalesce(`p`.`family_names`,'')) AS `full_name`,`p`.`gender` AS `gender`,`p`.`country_code` AS `country_code`,`p`.`phone` AS `phone`,cast(`p`.`status` as unsigned) AS `current_status`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from ((`tb_logs` `l` left join `tb_people` `p` on((`p`.`person_ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `p`.`user_ID`))) where (`l`.`table_name` = 'tb_people')",
-      "columns": [
-        "log_id",
-        "person_ID",
-        "user_ID",
-        "user_nick",
-        "user_email",
-        "courtesy_title",
-        "given_names",
-        "family_names",
-        "full_name",
-        "gender",
-        "country_code",
-        "phone",
-        "current_status",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_productos",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `product_id`,`p`.`SKU` AS `sku`,`p`.`name` AS `product_name`,`p`.`description` AS `product_description`,`p`.`current_price` AS `current_price`,`p`.`current_stock` AS `current_stock`,`p`.`status` AS `current_status`,`p`.`creation_date` AS `creation_date`,`p`.`last_update` AS `last_update`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from (`tb_logs` `l` left join `tb_products` `p` on((`p`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_products')",
-      "columns": [
-        "log_id",
-        "product_id",
-        "sku",
-        "product_name",
-        "product_description",
-        "current_price",
-        "current_stock",
-        "current_status",
         "creation_date",
-        "last_update",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_productos_proveedores",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `product_id`,`p`.`name` AS `product_name`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from (`tb_logs` `l` left join `tb_products` `p` on((`p`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_products_users_providers')",
-      "columns": [
-        "log_id",
-        "product_id",
-        "product_name",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_carts",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_carts')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_order_cancellations",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_order_cancellations')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_orders",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_orders')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_payment_methods",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_payment_methods')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_payment_transaction",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_payment_transaction')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_payments",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_payments')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_people",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_people')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_products",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_products')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_refunds",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_refunds')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_returns",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_returns')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_shipments",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_shipments')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_user_addresses",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_user_addresses')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tb_users",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tb_users')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tbc_categories",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbc_categories')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tbc_payment_methods_types",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbc_payment_methods_types')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tbd_address_components",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_address_components')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_cancellation_items",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_cancellation_items')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`cancellation_ID` AS `cancellation_ID`,`t`.`order_ID` AS `order_ID`,`t`.`requested_by` AS `requested_by`,`u`.`nick` AS `requested_by_nick`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tbd_cancellation_items` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`requested_by`))) where (`l`.`table_name` = 'tbd_cancellation_items')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "cancellation_ID",
+        "order_ID",
+        "requested_by",
+        "requested_by_nick",
+        "creation_date",
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_cart_items",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_cart_items')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `cart_ID`,`c`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email` from ((`tb_logs` `l` left join `tb_carts` `c` on((`c`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `c`.`user_ID`))) where (`l`.`table_name` = 'tbd_cart_items')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "cart_ID",
+        "user_ID",
+        "user_nick",
+        "user_email"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_order_items",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_order_items')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`seller_order_ID` AS `seller_order_ID`,`t`.`product_ID` AS `product_ID`,`t`.`provider_ID` AS `provider_ID`,`u`.`nick` AS `provider_nick`,`t`.`product_name` AS `product_name`,`t`.`quantity` AS `quantity`,`t`.`unit_price` AS `unit_price`,`t`.`subtotal` AS `item_subtotal`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from ((`tb_logs` `l` left join `tbd_order_items` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`provider_ID`))) where (`l`.`table_name` = 'tbd_order_items')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "seller_order_ID",
+        "product_ID",
+        "provider_ID",
+        "provider_nick",
+        "product_name",
+        "quantity",
+        "unit_price",
+        "item_subtotal",
+        "creation_date",
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_products_categories",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_products_categories')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `product_ID`,`p`.`SKU` AS `product_SKU`,`p`.`name` AS `product_name` from (`tb_logs` `l` left join `tb_products` `p` on((`p`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_products_categories')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "product_ID",
+        "product_SKU",
+        "product_name"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_products_users_providers",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_products_users_providers')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `product_ID`,`p`.`SKU` AS `product_SKU`,`p`.`name` AS `product_name` from (`tb_logs` `l` left join `tb_products` `p` on((`p`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_products_users_providers')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "product_ID",
+        "product_SKU",
+        "product_name"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_return_items",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_return_items')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`return_ID` AS `return_ID`,`t`.`order_ID` AS `order_ID`,`t`.`status` AS `current_return_item_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (`tb_logs` `l` left join `tbd_return_items` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_return_items')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "return_ID",
+        "order_ID",
+        "current_return_item_status",
+        "creation_date",
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_user_payment_methods",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_user_payment_methods')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`t`.`user_ID` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`t`.`payment_method_type_ID` AS `payment_method_type_ID`,`ty`.`code` AS `type_code`,`t`.`provider` AS `provider`,`t`.`label` AS `label`,`t`.`last_four` AS `last_four`,`t`.`is_default` AS `is_default`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update` from (((`tb_logs` `l` left join `tbd_user_payment_methods` `t` on((`t`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `t`.`user_ID`))) left join `tbc_payment_methods_types` `ty` on((`ty`.`ID` = `t`.`payment_method_type_ID`))) where (`l`.`table_name` = 'tbd_user_payment_methods')",
       "columns": [
-        "log_id",
-        "record_id",
+        "log_ID",
         "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
         "operation_date",
-        "operation_status"
+        "operation_status",
+        "user_ID",
+        "user_nick",
+        "user_email",
+        "payment_method_type_ID",
+        "type_code",
+        "provider",
+        "label",
+        "last_four",
+        "is_default",
+        "current_status",
+        "creation_date",
+        "last_update"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },
     {
       "name": "vw_trazabilidad_tbd_users_wishlist_products",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `record_id`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from `tb_logs` `l` where (`l`.`table_name` = 'tbd_users_wishlist_products')",
-      "columns": [
-        "log_id",
-        "record_id",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_tipos_metodos_pago",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `payment_method_type_ID`,`t`.`code` AS `code`,`t`.`description` AS `type_description`,cast(`t`.`status` as unsigned) AS `current_status`,`t`.`creation_date` AS `creation_date`,`t`.`last_update` AS `last_update`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from (`tb_logs` `l` left join `tbc_payment_methods_types` `t` on((`t`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbc_payment_methods_types')",
-      "columns": [
-        "log_id",
-        "payment_method_type_ID",
-        "code",
-        "type_description",
-        "current_status",
-        "creation_date",
-        "last_update",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_usuario_metodos_pago",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `payment_method_record_id`,`u`.`ID` AS `user_id`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from ((`tb_logs` `l` left join `tbd_user_payment_methods` `pm` on((`pm`.`ID` = `l`.`record_id`))) left join `tb_users` `u` on((`u`.`ID` = `pm`.`user_ID`))) where (`l`.`table_name` = 'tbd_user_payment_methods')",
-      "columns": [
-        "log_id",
-        "payment_method_record_id",
-        "user_id",
-        "user_nick",
-        "user_email",
-        "table_name",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_usuarios",
-      "definition": "select `l`.`ID` AS `log_id`,`l`.`record_id` AS `user_id`,`u`.`email` AS `email`,`u`.`nick` AS `nick`,`u`.`creation_date` AS `creation_date`,`u`.`last_update` AS `last_update`,`u`.`last_login` AS `last_login`,`u`.`status` AS `current_status`,`l`.`table_operation` AS `operation_type`,`l`.`db_user` AS `performed_by`,`l`.`table_description` AS `operation_description`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from (`tb_logs` `l` left join `tb_users` `u` on((`u`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tb_users')",
-      "columns": [
-        "log_id",
-        "user_id",
-        "email",
-        "nick",
-        "creation_date",
-        "last_update",
-        "last_login",
-        "current_status",
-        "operation_type",
-        "performed_by",
-        "operation_description",
-        "operation_date",
-        "operation_status"
-      ],
-      "description": "Vista restaurada por el respaldo; consulta derivada."
-    },
-    {
-      "name": "vw_trazabilidad_wishlist",
-      "definition": "select `l`.`ID` AS `log_ID`,`l`.`record_id` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email`,`l`.`table_name` AS `table_name`,`l`.`table_operation` AS `table_operation`,`l`.`table_description` AS `table_description`,`l`.`db_user` AS `db_user`,`l`.`operation_date` AS `operation_date`,`l`.`operation_status` AS `operation_status` from (`tb_logs` `l` left join `tb_users` `u` on((`u`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_users_wishlist_products')",
+      "definition": "select `l`.`ID` AS `log_ID`,`l`.`table_name` AS `table_name`,`l`.`record_id` AS `record_id`,`l`.`table_operation` AS `table_operation`,`l`.`db_user` AS `db_user`,`l`.`table_description` AS `table_description`,`l`.`operation_date` AS `operation_date`,cast(`l`.`operation_status` as unsigned) AS `operation_status`,`l`.`record_id` AS `user_ID`,`u`.`nick` AS `user_nick`,`u`.`email` AS `user_email` from (`tb_logs` `l` left join `tb_users` `u` on((`u`.`ID` = `l`.`record_id`))) where (`l`.`table_name` = 'tbd_users_wishlist_products')",
       "columns": [
         "log_ID",
+        "table_name",
+        "record_id",
+        "table_operation",
+        "db_user",
+        "table_description",
+        "operation_date",
+        "operation_status",
         "user_ID",
         "user_nick",
-        "user_email",
-        "table_name",
-        "table_operation",
-        "table_description",
-        "db_user",
-        "operation_date",
-        "operation_status"
+        "user_email"
       ],
       "description": "Vista restaurada por el respaldo; consulta derivada."
     },

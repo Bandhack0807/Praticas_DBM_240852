@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = __dirname;
-const source = path.resolve(root, '../Backup/respaldo_31_10_26.sql');
+const source = path.resolve(root, '../Backup/respaldo_10_11_26.sql');
 const sql = fs.readFileSync(source, 'utf8');
 function splitItems(s) {
   const out=[]; let start=0, depth=0, quote='';
@@ -33,6 +33,11 @@ for(const m of finalViews.matchAll(/\/\*!50001 VIEW `([^`]+)` AS ([\s\S]*?) \*\/
 }
 const purpose={tb_carts:'Carritos asociados a una cuenta de usuario.',tb_logs:'Bitácora de operaciones registradas sobre entidades.',tb_order_cancellations:'Encabezados de solicitudes de cancelación de pedidos.',tb_orders:'Encabezados de pedidos y sus importes.',tb_payment_methods:'Catálogo heredado de métodos de pago; confirmar uso mediante vistas/procedimientos.',tb_payment_transaction:'Transacciones de pago.',tb_payments:'Pagos vinculados a pedidos y métodos de pago del usuario.',tb_people:'Información de persona y datos asociados a una cuenta.',tb_products:'Catálogo de productos.',tb_refunds:'Reembolsos asociados a pagos.',tb_returns:'Encabezados de solicitudes de devolución.',tb_shipments:'Envíos vinculados a pedidos.',tb_user_addresses:'Direcciones asociadas a usuarios.',tb_users:'Cuentas de usuario.',tbc_categories:'Catálogo jerárquico de categorías.',tbc_payment_methods_types:'Catálogo de tipos de método de pago.',tbd_address_components:'Componentes jerárquicos de una dirección.',tbd_cancellation_items:'Detalle de artículos en una cancelación.',tbd_cart_items:'Productos y cantidades incluidos en carritos.',tbd_order_items:'Detalle de productos incluidos en pedidos.',tbd_products_categories:'Asociación entre productos y categorías.',tbd_products_users_providers:'Asociación entre productos y usuarios proveedores.',tbd_return_items:'Detalle de artículos incluidos en devoluciones.',tbd_user_payment_methods:'Métodos de pago pertenecientes a usuarios.',tbd_users_wishlist_products:'Asociación de productos guardados por usuarios.'};
 for(const t of tables)t.description=purpose[t.name]||'Tabla documentada en el esquema.';
+for(const name of ['tbc_categories','tb_products','tbd_products_categories']){
+  const insert=sql.match(new RegExp('INSERT INTO\\s+`'+name+'`\\s+VALUES\\s+([\\s\\S]*?);','i'));
+  const rowCount=insert?((insert[1].match(/\),\(/g)||[]).length+1):null;
+  const table=tables.find(t=>t.name===name); if(table)table.rowCount=rowCount;
+}
 const data={source:path.basename(source),database:'db_test_victor_7b',server:'MySQL 8.4.9',tables,views};
 fs.writeFileSync(path.join(root,'schema.json'),JSON.stringify(data,null,2));
 const esc=s=>String(s??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
