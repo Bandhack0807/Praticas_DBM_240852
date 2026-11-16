@@ -28,8 +28,8 @@ En esta práctica se realizaron actividades de administración y manipulación d
 
 Los siguientes recursos permiten consultar la estructura y documentación de la base de datos:
 
-- [Diagrama Entidad-Relación (MERE)]()
-- [Diccionario de datos]()
+- [Diagrama Entidad-Relación (MERE)](https://bandhack0807.github.io/Praticas_DBM_240852/Practica%2004/diagrama%20er/index.html)
+- [Diccionario de datos](https://bandhack0807.github.io/Praticas_DBM_240852/Practica%2004/diccionario%20de%20datos/index.html)
 ---
 
 ## 4. Resultados
