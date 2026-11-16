@@ -145,7 +145,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Carritos asociados a una cuenta de usuario."
+      "description": "Carritos asociados a una cuenta de usuario.",
+      "rowCount": 0
     },
     {
       "name": "tb_logs",
@@ -363,7 +364,8 @@
       "foreignKeys": [],
       "checks": [],
       "engine": "InnoDB AUTO_INCREMENT=66438 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Bitácora de operaciones registradas sobre entidades."
+      "description": "Bitácora de operaciones registradas sobre entidades.",
+      "rowCount": 8444
     },
     {
       "name": "tb_order_cancellations",
@@ -569,7 +571,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Encabezados de solicitudes de cancelación de pedidos."
+      "description": "Encabezados de solicitudes de cancelación de pedidos.",
+      "rowCount": 0
     },
     {
       "name": "tb_orders",
@@ -779,7 +782,8 @@
         }
       ],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Encabezados de pedidos y sus importes."
+      "description": "Encabezados de pedidos y sus importes.",
+      "rowCount": 0
     },
     {
       "name": "tb_payment_methods",
@@ -917,7 +921,8 @@
       "foreignKeys": [],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Catálogo heredado de métodos de pago; confirmar uso mediante vistas/procedimientos."
+      "description": "Catálogo heredado de métodos de pago; confirmar uso mediante vistas/procedimientos.",
+      "rowCount": 0
     },
     {
       "name": "tb_payment_transaction",
@@ -1099,7 +1104,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Transacciones de pago."
+      "description": "Transacciones de pago.",
+      "rowCount": 0
     },
     {
       "name": "tb_payments",
@@ -1305,7 +1311,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Pagos vinculados a pedidos y métodos de pago del usuario."
+      "description": "Pagos vinculados a pedidos y métodos de pago del usuario.",
+      "rowCount": 0
     },
     {
       "name": "tb_people",
@@ -1582,7 +1589,8 @@
       ],
       "checks": [],
       "engine": "InnoDB AUTO_INCREMENT=7504 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Información de persona y datos asociados a una cuenta."
+      "description": "Información de persona y datos asociados a una cuenta.",
+      "rowCount": 7502
     },
     {
       "name": "tb_products",
@@ -1951,7 +1959,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Reembolsos asociados a pagos."
+      "description": "Reembolsos asociados a pagos.",
+      "rowCount": 0
     },
     {
       "name": "tb_returns",
@@ -2157,7 +2166,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Encabezados de solicitudes de devolución."
+      "description": "Encabezados de solicitudes de devolución.",
+      "rowCount": 0
     },
     {
       "name": "tb_shipments",
@@ -2358,7 +2368,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Envíos vinculados a pedidos."
+      "description": "Envíos vinculados a pedidos.",
+      "rowCount": 0
     },
     {
       "name": "tb_user_addresses",
@@ -2677,7 +2688,8 @@
         }
       ],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Direcciones asociadas a usuarios."
+      "description": "Direcciones asociadas a usuarios.",
+      "rowCount": 0
     },
     {
       "name": "tb_users",
@@ -2873,7 +2885,8 @@
       "foreignKeys": [],
       "checks": [],
       "engine": "InnoDB AUTO_INCREMENT=7503 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Cuentas de usuario."
+      "description": "Cuentas de usuario.",
+      "rowCount": 7502
     },
     {
       "name": "tbc_categories",
@@ -3214,7 +3227,8 @@
       "foreignKeys": [],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Catálogo de tipos de método de pago."
+      "description": "Catálogo de tipos de método de pago.",
+      "rowCount": 0
     },
     {
       "name": "tbd_address_components",
@@ -3446,7 +3460,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Componentes jerárquicos de una dirección."
+      "description": "Componentes jerárquicos de una dirección.",
+      "rowCount": 0
     },
     {
       "name": "tbd_cancellation_items",
@@ -3676,7 +3691,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Detalle de artículos en una cancelación."
+      "description": "Detalle de artículos en una cancelación.",
+      "rowCount": 0
     },
     {
       "name": "tbd_cart_items",
@@ -3871,7 +3887,8 @@
         }
       ],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Productos y cantidades incluidos en carritos."
+      "description": "Productos y cantidades incluidos en carritos.",
+      "rowCount": 0
     },
     {
       "name": "tbd_order_items",
@@ -4150,7 +4167,8 @@
         }
       ],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Detalle de productos incluidos en pedidos."
+      "description": "Detalle de productos incluidos en pedidos.",
+      "rowCount": 0
     },
     {
       "name": "tbd_products_categories",
@@ -4532,7 +4550,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Asociación entre productos y usuarios proveedores."
+      "description": "Asociación entre productos y usuarios proveedores.",
+      "rowCount": 0
     },
     {
       "name": "tbd_return_items",
@@ -4738,7 +4757,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Detalle de artículos incluidos en devoluciones."
+      "description": "Detalle de artículos incluidos en devoluciones.",
+      "rowCount": 0
     },
     {
       "name": "tbd_user_payment_methods",
@@ -5033,7 +5053,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Métodos de pago pertenecientes a usuarios."
+      "description": "Métodos de pago pertenecientes a usuarios.",
+      "rowCount": 0
     },
     {
       "name": "tbd_users_wishlist_products",
@@ -5194,7 +5215,8 @@
       ],
       "checks": [],
       "engine": "InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
-      "description": "Asociación de productos guardados por usuarios."
+      "description": "Asociación de productos guardados por usuarios.",
+      "rowCount": 0
     }
   ],
   "views": [
