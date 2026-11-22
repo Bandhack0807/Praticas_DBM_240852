@@ -105,14 +105,6 @@ GRANT SELECT, INSERT, UPDATE, DELETE
 ON db_test_victor_7b.tb_products
 TO 'seller'@'%';
 
-GRANT EXECUTE
-ON PROCEDURE db_test_victor_7b.sp_soft_delete_product
-TO 'seller'@'%';
-
-GRANT EXECUTE
-ON PROCEDURE db_test_victor_7b.sp_restore_product
-TO 'seller'@'%';
-
 
 /*
 ============================================================
@@ -151,14 +143,6 @@ GRANT SELECT, INSERT, UPDATE
 ON db_test_victor_7b.tbd_products_categories
 TO 'support'@'%';
 
-GRANT EXECUTE
-ON PROCEDURE db_test_victor_7b.sp_soft_delete_product
-TO 'support'@'%';
-
-GRANT EXECUTE
-ON PROCEDURE db_test_victor_7b.sp_restore_product
-TO 'support'@'%';
-
 
 /*
 ============================================================
@@ -168,10 +152,6 @@ TO 'support'@'%';
 
 GRANT SELECT
 ON db_test_victor_7b.*
-TO 'common_user'@'%';
-
-GRANT EXECUTE
-ON PROCEDURE db_test_victor_7b.sp_register_new_user
 TO 'common_user'@'%';
 
 
@@ -185,14 +165,33 @@ GRANT SELECT
 ON db_test_victor_7b.tb_products
 TO 'user_not_registered'@'%';
 
+
+/*
+============================================================
+11. MODIFICACIÓN DE PRIVILEGIOS EXECUTE
+============================================================
+*/
+
+-- Se retira EXECUTE del rol user_not_registered para evitar
+-- que se herede por todos los usuarios con dicho rol.
+REVOKE EXECUTE
+ON PROCEDURE db_test_victor_7b.sp_register_new_user
+FROM 'user_not_registered'@'%';
+
+-- El permiso EXECUTE se concede directamente a las cuentas
+-- de la aplicación web y móvil.
 GRANT EXECUTE
 ON PROCEDURE db_test_victor_7b.sp_register_new_user
-TO 'user_not_registered'@'%';
+TO 'app_web'@'%';
+
+GRANT EXECUTE
+ON PROCEDURE db_test_victor_7b.sp_register_new_user
+TO 'app_mobile'@'%';
 
 
 /*
 ============================================================
-11. ASIGNACIÓN DE ROLES A LOS USUARIOS
+12. ASIGNACIÓN DE ROLES A LOS USUARIOS
 ============================================================
 */
 
@@ -231,7 +230,7 @@ TO 'app_mobile'@'%';
 
 /*
 ============================================================
-12. CONFIGURACIÓN DE ROLES PREDETERMINADOS
+13. CONFIGURACIÓN DE ROLES PREDETERMINADOS
 ============================================================
 */
 
@@ -268,7 +267,7 @@ TO 'app_mobile'@'%';
 
 /*
 ============================================================
-13. VERIFICACIÓN DE CUENTAS
+14. VERIFICACIÓN DE CUENTAS
 ============================================================
 */
 
@@ -295,7 +294,7 @@ ORDER BY User, Host;
 
 /*
 ============================================================
-14. VERIFICACIÓN DE ROLES ASIGNADOS
+15. VERIFICACIÓN DE ROLES ASIGNADOS
 ============================================================
 */
 
@@ -323,7 +322,7 @@ ORDER BY TO_USER, FROM_USER;
 
 /*
 ============================================================
-15. VERIFICACIÓN DE ROLES PREDETERMINADOS
+16. VERIFICACIÓN DE ROLES PREDETERMINADOS
 ============================================================
 */
 
@@ -350,7 +349,7 @@ ORDER BY USER, HOST;
 
 /*
 ============================================================
-16. VERIFICACIÓN DE PROCEDIMIENTOS
+17. VERIFICACIÓN DE PROCEDIMIENTOS
 ============================================================
 */
 
@@ -372,7 +371,7 @@ ORDER BY ROUTINE_NAME;
 
 /*
 ============================================================
-17. VERIFICACIÓN DE PRIVILEGIOS DE LOS ROLES
+18. VERIFICACIÓN DE PRIVILEGIOS DE LOS ROLES
 ============================================================
 */
 
@@ -387,7 +386,7 @@ SHOW GRANTS FOR 'user_not_registered'@'%';
 
 /*
 ============================================================
-18. VERIFICACIÓN DE PRIVILEGIOS EFECTIVOS
+19. VERIFICACIÓN DE PRIVILEGIOS EFECTIVOS
 ============================================================
 */
 
@@ -424,7 +423,7 @@ USING 'user_not_registered'@'%';
 
 /*
 ============================================================
-19. VERIFICACIÓN DE PRIVILEGIOS DIRECTOS DEL MIDDLEWARE
+20. VERIFICACIÓN DE PRIVILEGIOS DIRECTOS DEL MIDDLEWARE
 ============================================================
 */
 
@@ -444,7 +443,7 @@ ORDER BY GRANTEE, TABLE_NAME, PRIVILEGE_TYPE;
 
 /*
 ============================================================
-20. COMPROBACIÓN FINAL
+21. COMPROBACIÓN FINAL
 ============================================================
 */
 
