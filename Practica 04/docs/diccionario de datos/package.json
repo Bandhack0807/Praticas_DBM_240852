@@ -1,0 +1,1 @@
+{"name":"diccionario-datos-practica-03","version":"1.0.0","private":true,"description":"Diccionario estático basado en respaldo MySQL","scripts":{"generate":"node generate.js"},"engines":{"node":">=18"}}
